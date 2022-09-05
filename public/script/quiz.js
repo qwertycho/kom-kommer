@@ -64,6 +64,30 @@ function setAntwoorden(){
     }
     if (vraagNummer == quiz.length - 1) {
         next.innerHTML = 'Klaar';
+        next.addEventListener('click', () => {
+        //   make post request
+            try{
+                (async () => {
+                    const rawResponse = await fetch('/quizans', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(antwoorden)
+                    });
+                    const content = await rawResponse.json();
+                
+                    console.log(content);
+                })();
+                next.style.backgroundColor = "green";
+                next.innerHTML = "Bericht verzonden";
+                } catch(err){
+                    console.log(err);
+                    alert("Er is iets fout gegaan, probeer het later opnieuw");
+                    next.style.backgroundColor = "red";
+                }
+        });
     }
 }
 
