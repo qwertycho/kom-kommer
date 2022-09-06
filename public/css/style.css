@@ -2,6 +2,8 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    height: 100vh;
+    background-color: green;
 }
 
 .header{
@@ -14,22 +16,15 @@ body{
     font-size: 1.2rem;
 }
 
-main{
-    padding: 20px;
-    display: flex;
-    background-color: green;
-}
-
-img{
-    background-color: darkcyan;
-    max-height: 75vh;
-    width: auto;
-}
-
 nav{
     width: 100%;
     padding: 20px 0 20px 0;
     font-size: 1.2rem;
+    background-color: white;
+}
+
+nav .mobile-menu-button{
+    display: none;
 }
 
 nav ul{
@@ -59,4 +54,72 @@ nav a:hover{
 nav .active{
     color: green;
     font-size: 1.25rem;
+}
+
+main{
+    padding: 20px;
+    display: flex;
+    background-color: green;
+}
+
+main h4{
+    font-family: 'Oswald', sans-serif;
+}
+
+img{
+    background-color: darkcyan;
+    max-height: 75vh;
+    width: auto;
+}
+
+footer{
+    background-color: #f2f2f2;
+    padding: 5px 0 5px 0;
+    text-align: center;
+    font-size: 1rem;
+    width: 100%;
+    position: relative;
+    bottom: 0vh;
+}
+
+@media screen and (max-width: 600px){
+
+    nav ul{
+        display: block;
+    }
+
+    nav .hidden{
+        display: none;
+    }
+
+    nav .mobile-menu-button{
+        display: block;
+        font-size: 1.2rem;
+        color: black;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        margin: auto;
+        background-color: green;
+        padding: 10px;
+        border-radius: 15px;
+        width: 25vw;
+        min-width: 50px;
+        max-width: 100px;
+    }
+
+    nav li{
+        flex: 100%;
+        margin: 5px 0 5px 0;
+    }
+
+    main{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    img{
+        background-color: darkcyan;
+        max-height: 50vh;
+        width: auto;
+    }
 }
