@@ -73,14 +73,14 @@ body, body, html{
     margin-top: 15%;
 }
 
+footer{
+    position: absolute;
+    bottom: 0vh;
+}
+
 @media screen and (max-width: 600px){
     main{
         flex-direction: row;
-    }
-
-    footer{
-        position: absolute;
-        bottom: 0vh;
     }
 
 }

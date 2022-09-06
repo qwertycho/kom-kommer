@@ -9,9 +9,11 @@ app.use(bodyParser.json());
 
 app.use(express.static('public'));
 
+app.set('view engine', 'ejs');
 
 app.get('/quiz', (req, res) => {
-    res.sendFile(__dirname + '/views/quiz.html');
+    const footerText = require('./public/data/data.json');
+    res.render(__dirname + '/views/quiz', {footer:  footerText.footer.text});
 });
 
 // quiz antwoorden
@@ -31,10 +33,10 @@ app.post('/quizans', (req, res) => {
     res.send(JSON.stringify(score));
 } );
 
-
 // homepage
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/views/index.html');
+    const footerText = require('./public/data/data.json');
+    res.render(__dirname + '/views/index', {footer:  footerText.footer.text});
 });
 
 // 404 handler
