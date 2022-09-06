@@ -9,8 +9,23 @@ body, body, html{
     overflow: hidden;
 }
 
+.quiz{
+    width: 50vw;
+}
+
 .quiz p{
     display: inline-block;
+    font-size: 1.5rem;
+}
+
+.quiz .antwoorden{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.quiz .vragen{
+    text-align: center;
 }
 
 .quiz .vraag{
@@ -19,6 +34,8 @@ body, body, html{
 
 .quiz button{
     width: 45%;
+    box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.5);
+
 }
 
 .quiz .prev{
@@ -27,4 +44,31 @@ body, body, html{
 
 .quiz .next{
     float: right;
+}
+
+.quiz .progress{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: gray;
+    height: 5vh;
+    min-height: 20px;
+    max-height: 150px;
+    margin-top: 50px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.5);
+}
+
+.quiz .progress-bar{
+    height: 100%;
+    background-color: green;
+    border-radius: 5px;
+}
+
+.score{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 2rem;
+    margin-top: 15%;
 }

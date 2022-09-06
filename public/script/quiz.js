@@ -2,6 +2,7 @@ const main = document.querySelector('main');
 const prev = document.querySelector('.prev');
 const next = document.querySelector('.next');
 const vraag = document.querySelector('.vraag');
+const progress = document.querySelector('.progress-bar');
 
 const quiz = [
     vraag1 = {
@@ -29,7 +30,6 @@ const quiz = [
 let vraagNummer = 0;
 let antwoorden = [];
 
-
 setAntwoorden();
 
 // de vorige vraag laden en antwoord verwijderen
@@ -38,8 +38,8 @@ prev.addEventListener('click', () => {
         antwoorden.pop();
         vraagNummer--;
         setAntwoorden();
-        console.log(vraagNummer);
-        console.log(antwoorden);
+        next.innerHTML = 'volgende';
+
     } else {
         antwoorden = [];
     }
@@ -62,33 +62,27 @@ function setAntwoorden(){
     vraag.innerHTML = quiz[vraagNummer].vraag;
     for (let i = 0; i < document.querySelectorAll('.antwoord').length; i++) {
         document.querySelectorAll('.ans')[i].innerHTML = quiz[vraagNummer].antwoorden[i];
+        progress.style.width = `${(vraagNummer + 1) / quiz.length * 100}%`;
     }
     if (vraagNummer == quiz.length -1) {
-        next.innerHTML = 'Klaaar';
+        next.innerHTML = 'Klaar';
     }
 }
 
 function sendQuiz () {
-    try{
-        console.log("hier");
-        
+    try{        
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/quizans', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
-            console.log(this.responseText);
             let score = this.responseText;
             showscore(score);
         }
         xhr.send(JSON.stringify(antwoorden));
-        console.log("data send");
 
-        next.style.backgroundColor = "green";
-        next.innerHTML = "Bericht verzonden";
-        } catch(err){
+    } catch(err){
             console.log(err);
             alert("Er is iets fout gegaan, probeer het later opnieuw");
-            next.style.backgroundColor = "red";
         }
 }
 
@@ -97,7 +91,6 @@ function getAntwoorden() {
    for (let i = 0; i < document.querySelectorAll('.antwoord').length; i++) {
        if (document.querySelectorAll('.antwoord')[i].checked) {
            antwoorden[vraagNummer] = document.querySelectorAll('.antwoord')[i].value;
-           console.log(vraagNummer + " " + antwoorden[vraagNummer]);
            break;
        }
     }       
@@ -106,7 +99,12 @@ function getAntwoorden() {
 function showscore(score){
     const scoreDiv = document.createElement('div');
     scoreDiv.classList.add('score');
-    scoreDiv.innerHTML = `Je score is ${score}/5`;
+    if(score == 5){
+        scoreDiv.innerHTML = `Je score is: ${score}/5`;
+        scoreDiv.innerHTML += `<br>Jij bent echt een komkommer-kenner!`;
+    } else{
+        scoreDiv.innerHTML = `Je score is: ${score}/5`;
+    }
     main.innerHTML = "";
     main.appendChild(scoreDiv);
 }

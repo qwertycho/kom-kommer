@@ -55,3 +55,8 @@ nav a:hover{
     color: green;
     font-size: 1.25rem;
 }
+
+nav .active{
+    color: green;
+    font-size: 1.25rem;
+}

@@ -17,26 +17,30 @@
     <nav>
         <ul class="nav-bar">
             <li><a href="/">Home</a></li>
-            <li><a href="quiz">Leuke quiz</a></li>
+            <li><a href="quiz" class="active">Leuke quiz</a></li>
             <li><a href="feitjes">Epische komkommer feitjes</a></li>
             <li><a href="foto">Coole komkommer foto's</a></li>
             <li><a href="overons">Over ons</a></li>
         </ul>
     </nav>
+
       <main class="main" id="main">
         <div class="quiz" id="quiz">
             <div class="vragen" id="vragen">
-        <p class="vraag" id="vraag0">Dit is een vraag</p>
-        <input class="antwoord" type="radio" name="vraag0" value="1"> <p class="ans"> Antwoord 1 </p>
-        <input class="antwoord" type="radio" name="vraag0" value="2"> <p class="ans"> Antwoord 2 </p>
-        <input class="antwoord" type="radio" name="vraag0" value="3"> <p class="ans"> Antwoord 3 </p>
-
+                <p class="vraag" id="vraag0">Dit is een vraag</p>
+                <div class="antwoorden" id="antwoorden">
+                    <input class="antwoord" type="radio" name="vraag0" value="1"> <p class="ans"> Antwoord 1 </p>
+                    <input class="antwoord" type="radio" name="vraag0" value="2"> <p class="ans"> Antwoord 2 </p>
+                    <input class="antwoord" type="radio" name="vraag0" value="3"> <p class="ans"> Antwoord 3 </p>
+                </div>
+            </div>
+            <button class="prev">Vorige vraag</button>
+            <button class="next">Volgende vraag</button>
+            <div class="progress" id="progress">
+                <div class="progress-bar" id="progress-bar"></div>
         </div>
-        
-        <button class="prev">Vorige vraag</button>
+      
 
-        <button class="next">Volgende vraag</button>
-    </div>
     </main>
 
 </body>
