@@ -1,0 +1,30 @@
+main{
+    padding: 0;
+    height: 100%;
+    justify-content: center;
+}
+
+body, body, html{
+    height: 100%;
+    overflow: hidden;
+}
+
+.quiz p{
+    display: inline-block;
+}
+
+.quiz .vraag{
+    display: block;
+}
+
+.quiz button{
+    width: 45%;
+}
+
+.quiz .prev{
+    float: left;
+}
+
+.quiz .next{
+    float: right;
+}

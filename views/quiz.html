@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alles over komkommers!</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/quiz.css">
     <script src="script/quiz.js" defer></script>
 </head>
 <body>
@@ -23,14 +24,19 @@
         </ul>
     </nav>
       <main class="main" id="main">
+        <div class="quiz" id="quiz">
+            <div class="vragen" id="vragen">
         <p class="vraag" id="vraag0">Dit is een vraag</p>
         <input class="antwoord" type="radio" name="vraag0" value="1"> <p class="ans"> Antwoord 1 </p>
         <input class="antwoord" type="radio" name="vraag0" value="2"> <p class="ans"> Antwoord 2 </p>
         <input class="antwoord" type="radio" name="vraag0" value="3"> <p class="ans"> Antwoord 3 </p>
 
+        </div>
+        
         <button class="prev">Vorige vraag</button>
 
         <button class="next">Volgende vraag</button>
+    </div>
     </main>
 
 </body>

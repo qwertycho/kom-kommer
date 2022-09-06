@@ -28,7 +28,7 @@ app.post('/quizans', (req, res) => {
     console.log(score);
     // res.send(score)
 
-    res.send('ok');
+    res.send(JSON.stringify(score));
 } );
 
 

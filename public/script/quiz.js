@@ -29,6 +29,7 @@ const quiz = [
 let vraagNummer = 0;
 let antwoorden = [];
 
+
 setAntwoorden();
 
 // de vorige vraag laden en antwoord verwijderen
@@ -52,7 +53,7 @@ next.addEventListener('click', () => {
         setAntwoorden();
     } else {
         getAntwoorden();
-        console.log(antwoorden);
+        sendQuiz();
     }
 } );
 
@@ -62,33 +63,33 @@ function setAntwoorden(){
     for (let i = 0; i < document.querySelectorAll('.antwoord').length; i++) {
         document.querySelectorAll('.ans')[i].innerHTML = quiz[vraagNummer].antwoorden[i];
     }
-    if (vraagNummer == quiz.length - 1) {
-        next.innerHTML = 'Klaar';
-        next.addEventListener('click', () => {
-        //   make post request
-            try{
-                (async () => {
-                    const rawResponse = await fetch('/quizans', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(antwoorden)
-                    });
-                    const content = await rawResponse.json();
-                
-                    console.log(content);
-                })();
-                next.style.backgroundColor = "green";
-                next.innerHTML = "Bericht verzonden";
-                } catch(err){
-                    console.log(err);
-                    alert("Er is iets fout gegaan, probeer het later opnieuw");
-                    next.style.backgroundColor = "red";
-                }
-        });
+    if (vraagNummer == quiz.length -1) {
+        next.innerHTML = 'Klaaar';
     }
+}
+
+function sendQuiz () {
+    try{
+        console.log("hier");
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/quizans', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function () {
+            console.log(this.responseText);
+            let score = this.responseText;
+            showscore(score);
+        }
+        xhr.send(JSON.stringify(antwoorden));
+        console.log("data send");
+
+        next.style.backgroundColor = "green";
+        next.innerHTML = "Bericht verzonden";
+        } catch(err){
+            console.log(err);
+            alert("Er is iets fout gegaan, probeer het later opnieuw");
+            next.style.backgroundColor = "red";
+        }
 }
 
 // de antwoorden uitlezen
@@ -96,7 +97,16 @@ function getAntwoorden() {
    for (let i = 0; i < document.querySelectorAll('.antwoord').length; i++) {
        if (document.querySelectorAll('.antwoord')[i].checked) {
            antwoorden[vraagNummer] = document.querySelectorAll('.antwoord')[i].value;
+           console.log(vraagNummer + " " + antwoorden[vraagNummer]);
            break;
        }
     }       
+}
+
+function showscore(score){
+    const scoreDiv = document.createElement('div');
+    scoreDiv.classList.add('score');
+    scoreDiv.innerHTML = `Je score is ${score}/5`;
+    main.innerHTML = "";
+    main.appendChild(scoreDiv);
 }
