@@ -3,17 +3,30 @@ const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 const { json } = require('body-parser');
+ var path = require('path');
 // copilot magie
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(express.static('public'));
+app.use(express.static(__dirname +'/public'));
 
 app.set('view engine', 'ejs');
+
+app.get('/data', function(req, res) {
+    const data = require('./public/data/data.json');
+    res.send(data);
+});
 
 app.get('/quiz', (req, res) => {
     const footerText = require('./public/data/data.json');
     res.render(__dirname + '/views/quiz', {footer:  footerText.footer.text});
+});
+
+// dynamic route
+app.get('/:id', (req, res) => {
+    const footerText = require('./public/data/data.json');
+    // dynamic route
+    res.render(__dirname + '/views/' + req.params.id, {footer:  footerText.footer.text});
 });
 
 // quiz antwoorden
