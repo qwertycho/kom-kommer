@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 const { json } = require('body-parser');
- var path = require('path');
+const fs = require('fs');    
 // copilot magie
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -25,8 +25,15 @@ app.get('/quiz', (req, res) => {
 // dynamic route
 app.get('/:id', (req, res) => {
     const footerText = require('./public/data/data.json');
-    // dynamic route
-    res.render(__dirname + '/views/' + req.params.id, {footer:  footerText.footer.text});
+    // check if filename exists
+    fs.stat(__dirname + '/views/' + req.params.id + ".ejs", function(err, stat) {
+        if (err == null) {
+            res.render(__dirname + '/views/' + req.params.id, {footer:  footerText.footer.text});
+        } else {
+            console.log(err);
+            res.status(404).send('Verkeerde pagina jij bergkip');
+        }
+    });
 });
 
 // quiz antwoorden
