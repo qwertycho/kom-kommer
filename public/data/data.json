@@ -14,5 +14,27 @@
         "Er zijn héél veel komkommers op de wereld",
         "Gele komkommers zijn niet lekker",
         "Komkommers zijn groente en geen fruit"
+    ],
+    "nav": [
+        {
+            "name": "Home",
+            "link": "/"
+        },
+        {
+            "name": "Quiz",
+            "link": "quiz"
+        },
+        {
+            "name": "Epische Komkommer Feitjes",
+            "link": "feitjes"
+        },
+        {
+            "name": "Coole Komkommer Foto's",
+            "link": "foto"
+        },
+        {
+            "name": "Over ons",
+            "link": "overons"
+        }
     ]
 }

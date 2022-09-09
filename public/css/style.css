@@ -13,6 +13,7 @@ body{
     background-image: url("../img/kas2.jpg");
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
     font-size: 1.2rem;
     color: white;
 }

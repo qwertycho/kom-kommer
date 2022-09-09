@@ -8,6 +8,14 @@ const fs = require('fs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// eigen functies
+const navigatie = require('./server/nav.js');
+
+// navigatie en footer data
+const data = require('./public/data/data.json');
+const nav = navigatie.navBuilder(data);
+console.log(nav);
+
 app.use(express.static(__dirname +'/public'));
 
 app.set('view engine', 'ejs');
@@ -18,20 +26,20 @@ app.get('/data', function(req, res) {
 });
 
 app.get('/quiz', (req, res) => {
-    const footerText = require('./public/data/data.json');
-    res.render(__dirname + '/views/quiz', {footer:  footerText.footer.text});
+    res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav});
 });
+
+
 
 // dynamic route
 app.get('/:id', (req, res) => {
-    const footerText = require('./public/data/data.json');
     // check if filename exists
     fs.stat(__dirname + '/views/' + req.params.id + ".ejs", function(err, stat) {
         if (err == null) {
-            res.render(__dirname + '/views/' + req.params.id, {footer:  footerText.footer.text});
+            res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav});
         } else {
             console.log(err);
-            res.status(404).send('Verkeerde pagina jij bergkip');
+            res.status(404).sendFile(__dirname + '/views/404.html');
         }
     });
 });
@@ -47,16 +55,13 @@ app.post('/quizans', (req, res) => {
             score++;
         }
     }
-    console.log(score);
-    // res.send(score)
-
     res.send(JSON.stringify(score));
 } );
 
 // homepage
 app.get('/', (req, res) => {
     const footerText = require('./public/data/data.json');
-    res.render(__dirname + '/views/index', {footer:  footerText.footer.text});
+    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
 });
 
 // 404 handler
