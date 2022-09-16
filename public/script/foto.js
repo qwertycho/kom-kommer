@@ -12,14 +12,14 @@ xmlhttp.open("GET", "/data", true);
 xmlhttp.send();
 
 function makeImg(myObj) {
-    var fotos = myObj.fotos;
-    for (let i = 0; i < fotos.length; i++) {
+    var fotoArr = myObj.fotos;
+    for (let i = 0; i < fotoArr.length; i++) {
         const div = document.createElement('div');
         div.className = 'foto';
         div.id = 'foto' + i;
         const img = document.createElement('img');
-        img.src = fotos[i].link;
-        img.alt = fotos[i].name;
+        img.src = fotoArr[i].link;
+        img.alt = fotoArr[i].name;
         div.appendChild(img);
         gallerij.appendChild(div);
     }
