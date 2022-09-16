@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alles over komkommers!</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/foto.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="script/style.js" defer></script>
+    <script src="script/foto.js" defer></script>
+</head>
+
+<body>
+    <div class="header" id="header">
+        <h1>Coole komkommer foto's</h1>
+        <h3>Zó mooi heb je ze nog nooit gezien!</h3>
+    </div>
+    <nav>
+        <button class="mobile-menu-button">Menu</button>
+        <ul class="nav-bar hidden">
+            <%- nav  %>
+        </ul>
+    </nav>
+    <main>
+        <div class="main-tekst">
+            <h4>Gallerij</h4>
+            <div class="gallerij" id="gallerij">
+                <div class="foto" id="foto">
+                    <img src="img/plant.jpg" alt="komkommers">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <%- footer  %>
+    </footer>
+
+</body>
+
+</html>

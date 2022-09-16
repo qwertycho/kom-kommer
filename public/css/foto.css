@@ -1,0 +1,14 @@
+.main-tekst{
+    width: 100%;
+}
+
+.gallerij{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.foto{
+    margin: 1% 0 0 0;
+}

@@ -29,17 +29,11 @@ app.get('/quiz', (req, res) => {
     res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav});
 });
 
-
-
 // dynamic route
 app.get('/:id', (req, res) => {
-    console.log("/:id is called");
     // check if filename exists
-    console.log("De route is: " + req.params.id);
-
     if(req.params.id == "" || req.params.id == null || req.params.id == undefined || req.params.id == "/"){ 
         res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
-        console.log("index xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     } 
     fs.stat(__dirname + '/views/' + req.params.id + ".ejs", function(err, stat) {
         console.log(req.params.id);
@@ -54,7 +48,6 @@ app.get('/:id', (req, res) => {
 
 // quiz antwoorden
 app.post('/quizans', (req, res) => {
-    console.log(req.body);
     const goed = ["3", "3", "1", "1", "2"];
     let antwoorden = req.body;
     let score = 0;
@@ -68,8 +61,6 @@ app.post('/quizans', (req, res) => {
 
 // homepage
 app.get('/', (req, res) => {
-    console.log("index pagina op /");
-    const footerText = require('./public/data/data.json');
     res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
 });
 
