@@ -32,6 +32,8 @@ app.get('/quiz', (req, res) => {
 // dynamic route
 app.get('/:id', (req, res) => {
     // check if filename exists
+    console.log(req.params.id);
+
     if(req.params.id == "" || req.params.id == null) {
         res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
         console.log("index xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
