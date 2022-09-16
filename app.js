@@ -10,11 +10,11 @@ app.use(bodyParser.json());
 
 // eigen functies
 const navigatie = require('./server/nav.js');
+const quiz = require('./server/quiz.js');
 
 // navigatie en footer data
 const data = require('./public/data/data.json');
 const nav = navigatie.navBuilder(data);
-console.log(nav);
 
 app.use(express.static(__dirname +'/public'));
 
@@ -36,7 +36,6 @@ app.get('/:id', (req, res) => {
         res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
     } 
     fs.stat(__dirname + '/views/' + req.params.id + ".ejs", function(err, stat) {
-        console.log(req.params.id);
        if (err == null) {
             res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav});
         } else {
@@ -48,15 +47,7 @@ app.get('/:id', (req, res) => {
 
 // quiz antwoorden
 app.post('/quizans', (req, res) => {
-    const goed = ["3", "3", "1", "1", "2"];
-    let antwoorden = req.body;
-    let score = 0;
-    for (let i = 0; i < antwoorden.length; i++) {
-        if (antwoorden[i] == goed[i]) {
-            score++;
-        }
-    }
-    res.send(JSON.stringify(score));
+    res.send(JSON.stringify(quiz.quizCheck(req.body)));
 } );
 
 // homepage

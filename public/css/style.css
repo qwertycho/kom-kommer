@@ -74,6 +74,7 @@ img{
     background-color: darkcyan;
     max-height: 70vh;
     width: auto;
+    max-width: 50%;
     border-radius: 10px;
     box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.5);
 }
@@ -104,6 +105,25 @@ footer a{
 .intro-tekst{
     width: 85%;
 }
+
+@media screen and (max-width: 850px){
+
+    nav{
+        font-size: 1rem;
+    }
+
+    nav .active{
+        font-size: 1.1rem;
+    }
+
+    img{
+        background-color: darkcyan;
+        max-height: 60vh;
+        width: auto;
+    }
+}
+
+
 
 @media screen and (max-width: 600px){
 
@@ -138,11 +158,21 @@ footer a{
         padding: 20px;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+    }
+
+    main h4{
+        text-align: center;
+    }
+
+    main .intro-tekst{
+        width: auto
     }
 
     img{
         background-color: darkcyan;
         max-height: 50vh;
         width: auto;
+        margin: 20px auto auto auto;
     }
 }

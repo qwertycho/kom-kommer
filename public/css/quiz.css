@@ -13,6 +13,8 @@ body, body, html{
     width: 50vw;
     max-height: 50%;
     margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .quiz p{
@@ -28,16 +30,25 @@ body, body, html{
 
 .quiz .vragen{
     text-align: center;
+    width: 100%;
+    font-weight: bolder;
 }
 
 .quiz .vraag{
     display: block;
 }
 
-.quiz button{
-    width: 45%;
-    box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.5);
+.buttons{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
 
+.quiz button{
+    width: 25%;
+    height: 75%;
+    box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.5);
+    font-size: 1.2rem;
 }
 
 .quiz .prev{
@@ -80,6 +91,12 @@ footer{
     bottom: 0vh;
 }
 
+@media screen and (max-width: 850px){
+    .quiz button{
+        font-size: 1rem;
+    }
+}
+
 @media screen and (max-width: 600px){
     main{
         flex-direction: row;
@@ -87,6 +104,10 @@ footer{
 
     .quiz p{
         font-size: 1rem;
+    }
+
+    .quiz button{
+        font-size: 0.8rem;
     }
 
 }
