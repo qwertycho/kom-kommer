@@ -30,7 +30,7 @@ app.get('/quiz', (req, res) => {
 });
 
 // homepage
-app.get('/', (req, res) => {
+app.get('', (req, res) => {
     console.log("index pagina op /");
     const footerText = require('./public/data/data.json');
     res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
@@ -70,9 +70,6 @@ app.post('/quizans', (req, res) => {
     }
     res.send(JSON.stringify(score));
 } );
-
-
-
 
 // 404 handler
 app.use(function (req,res,next){
