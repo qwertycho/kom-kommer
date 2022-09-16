@@ -29,6 +29,13 @@ app.get('/quiz', (req, res) => {
     res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav});
 });
 
+// homepage
+app.get('/', (req, res) => {
+    console.log("index pagina op /");
+    const footerText = require('./public/data/data.json');
+    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+});
+
 // dynamic route
 app.get('/:id', (req, res) => {
     console.log("/:id is called");
@@ -64,18 +71,8 @@ app.post('/quizans', (req, res) => {
     res.send(JSON.stringify(score));
 } );
 
-// homepage
-app.get('/', (req, res) => {
-    console.log("index pagina op /");
-    const footerText = require('./public/data/data.json');
-    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
-});
 
-app.get('', (req, res) => {
-    console.log("index pagina op  blank");
-    const footerText = require('./public/data/data.json');
-    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
-});
+
 
 // 404 handler
 app.use(function (req,res,next){
