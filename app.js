@@ -29,17 +29,16 @@ app.get('/quiz', (req, res) => {
     res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav});
 });
 
-
-
 // dynamic route
 app.get('/:id', (req, res) => {
     // check if filename exists
+    if(req.params.id == "" || req.params.id == null) {
+        res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+        console.log("index xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    } 
     fs.stat(__dirname + '/views/' + req.params.id + ".ejs", function(err, stat) {
         console.log(req.params.id);
-        if(req.params.id == "" || req.params.id == null) {
-            res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
-            console.log("index xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-        } else if (err == null) {
+       if (err == null) {
             res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav});
         } else {
             console.log(err);
