@@ -29,30 +29,7 @@ app.get('/quiz', (req, res) => {
     res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav});
 });
 
-// homepage
-app.get('/', (req, res) => {
-    console.log("index pagina op /");
-    const footerText = require('./public/data/data.json');
-    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
-});
 
-app.get(null, (req, res) => {
-    console.log("index pagina op null");
-    const footerText = require('./public/data/data.json');
-    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
-});
-
-app.get("1.0", (req, res) => {
-    console.log("index pagina op undefined");
-    const footerText = require('./public/data/data.json');
-    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
-});
-
-app.get("/1.0", (req, res) => {
-    console.log("index pagina op undefined");
-    const footerText = require('./public/data/data.json');
-    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
-});
 
 // dynamic route
 app.get('/:id', (req, res) => {
@@ -88,6 +65,13 @@ app.post('/quizans', (req, res) => {
     }
     res.send(JSON.stringify(score));
 } );
+
+// homepage
+app.get('/', (req, res) => {
+    console.log("index pagina op /");
+    const footerText = require('./public/data/data.json');
+    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+});
 
 // 404 handler
 app.use(function (req,res,next){
