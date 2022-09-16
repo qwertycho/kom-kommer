@@ -71,6 +71,12 @@ app.get('/', (req, res) => {
     res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
 });
 
+app.get('', (req, res) => {
+    console.log("index pagina op  blank");
+    const footerText = require('./public/data/data.json');
+    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+});
+
 // 404 handler
 app.use(function (req,res,next){
 	res.status(404).send('Verkeerde pagina jij bergkip');
