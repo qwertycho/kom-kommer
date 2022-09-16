@@ -31,10 +31,11 @@ app.get('/quiz', (req, res) => {
 
 // dynamic route
 app.get('/:id', (req, res) => {
+    console.log("/:id is called");
     // check if filename exists
     console.log(req.params.id);
 
-    if(req.params.id == "" || req.params.id == null) {
+    if(req.params.id == "" || req.params.id == null) || req.params.id == "/") {
         res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
         console.log("index xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     } 
@@ -65,6 +66,7 @@ app.post('/quizans', (req, res) => {
 
 // homepage
 app.get('/', (req, res) => {
+    console.log("index pagina op /");
     const footerText = require('./public/data/data.json');
     res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
 });
