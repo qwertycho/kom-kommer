@@ -15,7 +15,7 @@ const quiz = [
     },
     vraag3 = {
         vraag: "Wat is de ideale groei temperatuur van een komkommer?",
-        antwoorden: ["??", "??", "??"],
+        antwoorden: ["21-25 graden", "26-31 graden", "15-20 graden"],
     },
     vraag4 = {
         vraag: "Wat kan je met komkommers maken?",
