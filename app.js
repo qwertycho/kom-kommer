@@ -42,7 +42,13 @@ app.get(null, (req, res) => {
     res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
 });
 
-app.get(undefined, (req, res) => {
+app.get("1.0", (req, res) => {
+    console.log("index pagina op undefined");
+    const footerText = require('./public/data/data.json');
+    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+});
+
+app.get("/1.0", (req, res) => {
     console.log("index pagina op undefined");
     const footerText = require('./public/data/data.json');
     res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
