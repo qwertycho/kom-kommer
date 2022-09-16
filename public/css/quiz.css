@@ -11,6 +11,8 @@ body, body, html{
 
 .quiz{
     width: 50vw;
+    max-height: 50%;
+    margin-top: 50px;
 }
 
 .quiz p{
@@ -81,6 +83,10 @@ footer{
 @media screen and (max-width: 600px){
     main{
         flex-direction: row;
+    }
+
+    .quiz p{
+        font-size: 1rem;
     }
 
 }

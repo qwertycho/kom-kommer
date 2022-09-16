@@ -63,6 +63,7 @@ main{
     display: flex;
     background-color: green;
     justify-content: space-between;
+    font-size: 1.2rem;
 }
 
 main h4{
@@ -92,6 +93,18 @@ footer a{
     text-decoration: none;
 }
 
+.white-background{
+    background-color: #f5f5f5;
+    padding: 25px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.5);
+}
+
+.intro-tekst{
+    width: 85%;
+}
+
 @media screen and (max-width: 600px){
 
     nav ul{
@@ -104,7 +117,7 @@ footer a{
 
     nav .mobile-menu-button{
         display: block;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: black;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         margin: auto;
