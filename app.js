@@ -30,8 +30,20 @@ app.get('/quiz', (req, res) => {
 });
 
 // homepage
-app.get('', (req, res) => {
+app.get('/', (req, res) => {
     console.log("index pagina op /");
+    const footerText = require('./public/data/data.json');
+    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+});
+
+app.get(null, (req, res) => {
+    console.log("index pagina op null");
+    const footerText = require('./public/data/data.json');
+    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+});
+
+app.get(undefined, (req, res) => {
+    console.log("index pagina op undefined");
     const footerText = require('./public/data/data.json');
     res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
 });
