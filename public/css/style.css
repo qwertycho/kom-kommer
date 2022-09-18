@@ -106,22 +106,16 @@ footer a{
     width: 85%;
 }
 
-/* @media screen and (max-width: 850px){
-
-    nav{
-        font-size: 1rem;
-    }
-
-    nav .active{
-        font-size: 1.1rem;
-    }
-
-    img{
-        background-color: darkcyan;
-        max-height: 55vh;
-        width: auto;
-    }
-} */
+.disclaimer{
+    position:sticky;
+    width: auto;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    background-color: rgba(178, 214, 46, 0.795);
+    border-radius: 10px;
+    z-index: 99;
+}
 
 
 

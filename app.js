@@ -3,7 +3,9 @@ const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
 const { json } = require('body-parser');
-const fs = require('fs');    
+const fs = require('fs');
+const cookieParser = require('cookie-parser');
+app.use(cookieParser())
 // copilot magie
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -11,6 +13,7 @@ app.use(bodyParser.json());
 // eigen functies
 const navigatie = require('./server/nav.js');
 const quiz = require('./server/quiz.js');
+const cookie = require('./server/disclaimer.js');
 
 // navigatie en footer data
 const data = require('./public/data/data.json');
@@ -26,18 +29,18 @@ app.get('/data', function(req, res) {
 });
 
 app.get('/quiz', (req, res) => {
-    res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav});
+    res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
 });
 
 // dynamic route
 app.get('/:id', (req, res) => {
     // check if filename exists
     if(req.params.id == "" || req.params.id == null || req.params.id == undefined || req.params.id == "/"){ 
-        res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+        res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});;
     } 
     fs.stat(__dirname + '/views/' + req.params.id + ".ejs", function(err, stat) {
        if (err == null) {
-            res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav});
+            res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
         } else {
             console.log(err);
             res.status(404).sendFile(__dirname + '/views/404.html');
@@ -52,7 +55,7 @@ app.post('/quizans', (req, res) => {
 
 // homepage
 app.get('/', (req, res) => {
-    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav});
+    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
 });
 
 // 404 handler
