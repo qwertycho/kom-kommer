@@ -102,8 +102,12 @@ function showscore(score){
     if(score == 5){
         scoreDiv.innerHTML = `Je score is: ${score}/5`;
         scoreDiv.innerHTML += `<br>Jij bent echt een komkommer-kenner!`;
-    } else{
+    } else if(score > 2){
         scoreDiv.innerHTML = `Je score is: ${score}/5`;
+        scoreDiv.innerHTML += `<br>Jij bent nog geen komkommer-kenner!`;
+    } else {
+        scoreDiv.innerHTML = `Je score is: ${score}/5`;
+        scoreDiv.innerHTML += `<br>Jij bent een komkommer noob!`;
     }
     main.innerHTML = "";
     main.appendChild(scoreDiv);

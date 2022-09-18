@@ -14,9 +14,11 @@ xmlhttp.send();
 function makeImg(myObj) {
     var fotoArr = myObj.fotos;
     for (let i = 0; i < fotoArr.length; i++) {
-        const div = document.createElement('div');
+        const div = document.createElement('a');
         div.className = 'foto';
         div.id = 'foto' + i;
+        div.href =  fotoArr[i].link;
+        div.target = '_blank';
         const img = document.createElement('img');
         img.src = fotoArr[i].link;
         img.alt = fotoArr[i].name;

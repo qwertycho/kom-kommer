@@ -1,12 +1,6 @@
 main{
-    padding: 0;
-    height: 100%;
-    justify-content: center;
-}
-
-body, body, html{
-    height: 100vh;
-    overflow: hidden;
+    justify-content: space-around;
+    flex-direction: row;
 }
 
 .quiz{
@@ -45,8 +39,7 @@ body, body, html{
 }
 
 .quiz button{
-    width: 25%;
-    height: 75%;
+    padding: 1%;
     box-shadow: 5px 5px 15px 3px rgba(0,0,0,0.5);
     font-size: 1.2rem;
 }
@@ -79,11 +72,10 @@ body, body, html{
 }
 
 .score{
-    display: flex;
-    justify-content: center;
     width: 100%;
     font-size: 2rem;
     margin-top: 15%;
+    text-align: center;
 }
 
 footer{

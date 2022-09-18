@@ -106,7 +106,7 @@ footer a{
     width: 85%;
 }
 
-@media screen and (max-width: 850px){
+/* @media screen and (max-width: 850px){
 
     nav{
         font-size: 1rem;
@@ -118,14 +118,14 @@ footer a{
 
     img{
         background-color: darkcyan;
-        max-height: 60vh;
+        max-height: 55vh;
         width: auto;
     }
-}
+} */
 
 
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 850px){
 
     nav ul{
         display: block;
