@@ -23,7 +23,7 @@ const quiz = [
     },
     vraag5 = {
         vraag: "Hoe bewaar je het beste een komkommer?",
-        antwoorden: ["in de zon", "in de koelkast", "in de vriezer"],
+        antwoorden: ["< 10 graden", "10-13 graden", "13-18 graden"],
     }
 ];
 
