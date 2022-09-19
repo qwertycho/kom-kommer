@@ -5,6 +5,8 @@ var bodyParser = require('body-parser');
 const { json } = require('body-parser');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+
 app.use(cookieParser())
 // copilot magie
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,6 +48,22 @@ app.get('/:id', (req, res) => {
             res.status(404).sendFile(__dirname + '/views/404.html');
         }
     });
+});
+
+app.post('/users/login', (req, res) => {
+    let username = req.body.username;
+    let password = req.body.password;
+    if(username == "admin" && password == "admin"){
+        res.cookie('auth', 'randostring', { maxAge: 900000, httpOnly: true });
+    }
+});
+
+app.get('/dashboard', (req, res) => {
+    if(req.cookies.auth == "randostring"){
+        res.render(__dirname + '/views/dashboard', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
+    } else {
+        res.render(__dirname + '/views/login', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
+    }
 });
 
 // quiz antwoorden
