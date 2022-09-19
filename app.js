@@ -1,14 +1,14 @@
 const port = 3300;
 const express = require('express');
+const router = express.Router()
 const app = express();
 var bodyParser = require('body-parser');
 const { json } = require('body-parser');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
-const dotenv = require('dotenv');
+require('dotenv').config()
 
 app.use(cookieParser())
-// copilot magie
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -34,6 +34,9 @@ app.get('/quiz', (req, res) => {
     res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
 });
 
+const adminRouter = require('./routes/admin.js');
+app.use('/dashboard', adminRouter);
+
 // dynamic route
 app.get('/:id', (req, res) => {
     // check if filename exists
@@ -48,22 +51,6 @@ app.get('/:id', (req, res) => {
             res.status(404).sendFile(__dirname + '/views/404.html');
         }
     });
-});
-
-app.post('/users/login', (req, res) => {
-    let username = req.body.username;
-    let password = req.body.password;
-    if(username == "admin" && password == "admin"){
-        res.cookie('auth', 'randostring', { maxAge: 900000, httpOnly: true });
-    }
-});
-
-app.get('/dashboard', (req, res) => {
-    if(req.cookies.auth == "randostring"){
-        res.render(__dirname + '/views/dashboard', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
-    } else {
-        res.render(__dirname + '/views/login', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
-    }
 });
 
 // quiz antwoorden

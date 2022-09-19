@@ -1,8 +1,7 @@
 const cookie ={
     checkCookies: function(data){
-        let cookies = data;
         try {
-            if(cookies.cookie != "true"){
+            if(data.cookie != "true"){
                 return this.Disclaimer();
             }
         } catch (error) {

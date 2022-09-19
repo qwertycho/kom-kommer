@@ -9,13 +9,14 @@ const login = async (event) => {
     const username = usernameInput.value;
     const password = passwordInput.value;
     
-    const response = await fetch('/users/login', {
+    const response = await fetch('/dashboard/login', {
         method: 'POST',
         body: JSON.stringify({ username, password }),
         headers: { 'Content-Type': 'application/json' },
     });
     
     if (response.ok) {
+        console.log('success');
         document.location.replace('/dashboard');
     } else {
         alert(response.statusText);

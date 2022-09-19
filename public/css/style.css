@@ -85,7 +85,7 @@ footer{
     text-align: center;
     font-size: 1rem;
     width: 100%;
-    position: relative;
+    position: static;
     bottom: 0vh;
 }
 
@@ -107,7 +107,7 @@ footer a{
 }
 
 .disclaimer{
-    position:sticky;
+    position:fixed;
     width: auto;
     bottom: 0;
     left: 0;
@@ -168,5 +168,9 @@ footer a{
         max-height: 50vh;
         width: auto;
         margin: 20px auto auto auto;
+    }
+
+    footer{
+        position: relative;
     }
 }
