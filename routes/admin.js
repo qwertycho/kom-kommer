@@ -11,9 +11,8 @@ const nav = navigatie.navBuilder(data);
 router.post('/login', (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
-    console.log(username, password);
     if(username == process.env.admin && password == process.env.password){
-        res.cookie('auth', 'randostring', { maxAge: 900000, httpOnly: true });
+        res.cookie('auth', process.env.auth, { maxAge: 900000, httpOnly: true });
         res.redirect('/dashboard');
     } else {
         console.log("wrong credentials");
@@ -21,17 +20,15 @@ router.post('/login', (req, res) => {
     }
 });
 
-router.get('/login', (req, res) => {
-        res.render('../views/login', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
-});
-
 router.get('/', (req, res) => {
     console.log(req.cookies);
-    // if(req.cookies.auth == "randostring"){
+    if(req.cookies.auth == process.env.auth){
+        console.log("logged in");
         res.render('../views/dashboard', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
-    // } else {
-        // res.render('../views/login', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
-    // }
+    } else {
+        console.log("not logged in");
+        res.render('../views/login', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
+    }
 });
 
 module.exports = router;
