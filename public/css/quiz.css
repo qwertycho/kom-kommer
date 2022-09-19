@@ -78,6 +78,11 @@ main{
     text-align: center;
 }
 
+/* ik haat dit */
+footer{
+    position: fixed;
+}
+
 @media screen and (max-width: 850px){
     .quiz button{
         font-size: 1rem;
