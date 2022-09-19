@@ -72,7 +72,7 @@ function setAntwoorden(){
 function sendQuiz () {
     try{        
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/quizans', true);
+        xhr.open('POST', '/quiz', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
             let score = this.responseText;
