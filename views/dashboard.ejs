@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script src="script/style.js" defer></script>
+    <script src="/script/style.js" defer></script>
     <script src="/script/cookie.js" defer></script>
     <script src="/script/dashboard.js" defer></script>
-
 </head>
 
 <body>
@@ -33,7 +32,10 @@
                 <form class="feitForm">
                     <label for="feitje">Nieuw feitje</label>
                     <input type="text" name="feitje" id="feitje">
-                    <button type="submit">Voeg toe</button>
+                    <button id="addFeitje" type="submit">Voeg toe</button>
+                    <div id="feitjesList">
+
+                    </div>
                 </form>
                     
             </div>

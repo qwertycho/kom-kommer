@@ -7,6 +7,8 @@ const cookie = require('../server/disclaimer.js');
 const data = require('../public/data/data.json');
 const navigatie = require('../server/nav.js');
 const nav = navigatie.navBuilder(data);
+const database = require('../server/database.ts');
+const { json } = require('express/lib/response.js');
 
 router.post('/login', (req, res) => {
     let username = req.body.username;
@@ -19,6 +21,30 @@ router.post('/login', (req, res) => {
         // loggen naar database
     }
 });
+
+router.get('/feitjes', (req, res) => {
+    console.log("request for feitjes");
+    console.log(req.body);
+    try{
+        database.loadFeitjes().then((result) => {
+            console.log(result);
+            res.send(JSON.stringify(result));
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+}).post('/feitjes', (req, res) => {
+    try{
+        database.addFeitje(req.body.feit).then(() => {
+            res.send(JSON.stringify(req.body.feit));
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+});
+
 
 router.get('/', (req, res) => {
     console.log(req.cookies);
