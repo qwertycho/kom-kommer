@@ -43,6 +43,34 @@ router.get('/feitjes', (req, res) => {
         console.log(err);
         res.status(500).send();
     }
+})
+router.delete('/feitjes', (req, res) => {
+    console.log("delete request");
+    console.log("request for  put in feitjes");
+    console.log(req.body);
+    try{
+        database.deleteFeitje(req.body.id).then(() => {
+            res.send(JSON.stringify(req.body.id));
+        });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
+router.put('/feitjes', (req, res) => {
+    console.log("request for  put in feitjes");
+    console.log(req.body);
+    try{
+        database.updateFeitje(req.body.id, req.body.feit).then(() => {
+            res.send(JSON.stringify(req.body.id));
+        });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
 });
 
 
