@@ -2,12 +2,12 @@
 async function request(url, method, data){
     return new Promise((resolve, reject) => {
     let xmlhttp = new XMLHttpRequest();
+
     xmlhttp.onreadystatechange = function() {
-        if (this.status != 500) {
-            let data = JSON.parse(this.responseText);
-            resolve(data);
-        } else {
-            reject(this.status);
+        
+        console.log(this.readyState);
+        if (this.readyState == 4) {
+            resolve(this.responseText);
         }
     };
     xmlhttp.open(method, url, true);
@@ -20,42 +20,18 @@ async function request(url, method, data){
     });
 }
 
-async function deleteFeitje(e){
-    e.preventDefault();
-    let id = this.getAttribute("id");
-    let feitjeData = {
-        id: id
-    };
-    return new Promise((resolve, reject) => {
-
-        request('/dashboard/feitjes', 'DELETE', JSON.stringify(feitjeData)).then((result) => {
-            showFeitjes();
-        });
-    });
-}
-
-async function updateFeitje(e){
-    e.preventDefault();
-    let id = this.getAttribute("id");
-    let feitje = document.getElementById("feitje" + id).value;
-    let feitjeData = {
-        feit: feitje,
-        id: id
-    };
-    return new Promise((resolve, reject) => {
-
-        request('/dashboard/feitjes', 'PUT', JSON.stringify(feitjeData)).then((result) => {
-            showFeitjes();
-        });
-    });
-}
-
 async function showFeitjes(){
-    let feitjes = await request('/dashboard/feitjes', 'GET');
+
+    await request('/dashboard/feitjes', 'GET').then((feitjes) => {
+
+        console.log(feitjes);
+        let feitjesData = JSON.parse(feitjes);
+
+
     let feitjesList = document.getElementById("feitjesList");
     feitjesList.innerHTML = ""; 
     let i = 1;
-    feitjes.forEach(feitje => {
+    feitjesData.forEach(feitje => {
         let feitjeItem = document.createElement("li");
         let div = document.createElement("div");
         let feitjeText = document.createElement("input");
@@ -78,16 +54,57 @@ async function showFeitjes(){
         feitjesList.appendChild(div);
 
     });
+    }).catch((error) => {
+        console.log(error);
+    });
 }  showFeitjes();
 
 const feitjeToevoegen = document.getElementById("addFeitje");
+
 feitjeToevoegen.addEventListener("click", (e) => {
-    e.preventDefault();
     let feitje = document.getElementById("feitje").value;
     let feitjeData = {
         feit: feitje
     };
-    request('/dashboard/feitjes', 'POST', JSON.stringify(feitjeData)).then((result) => {
-        showFeitjes();
-    });
-});
+    feitjes(e, "add", null, feitjeData);
+})
+
+function deleteFeitje(e){
+    e.preventDefault();
+    let id = this.getAttribute("id");
+    let feitjeData = {
+        id: id
+    };
+    feitjes(e, "delete", null, feitjeData);
+}
+function updateFeitje(e){
+    e.preventDefault();
+    let id = this.getAttribute("id");
+    let feitje = document.getElementById("feitje" + id).value;
+    let feitjeData = {
+        feit: feitje,
+        id: id
+    };  
+    feitjes(e, "update", null, feitjeData);
+}
+
+function feitjes(e, action, id, data){
+    e.preventDefault();
+    switch(action){
+        case "delete":
+            request('/dashboard/feitjes', 'DELETE', JSON.stringify(data)).then((result) => {
+                showFeitjes();
+            });
+            break;
+        case "update":
+            request('/dashboard/feitjes', 'PUT', JSON.stringify(data)).then((result) => {
+                showFeitjes();
+            });
+            break;
+        case "add":
+            request('/dashboard/feitjes', 'POST', JSON.stringify(data)).then((result) => {
+                showFeitjes();
+            });
+            break;
+    }
+}

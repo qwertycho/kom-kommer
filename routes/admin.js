@@ -35,6 +35,8 @@ router.get('/feitjes', (req, res) => {
         res.status(500).send();
     }
 }).post('/feitjes', (req, res) => {
+    console.log("request for post feitjes");
+    console.log(req.body);
     try{
         database.addFeitje(req.body.feit).then(() => {
             res.send(JSON.stringify(req.body.feit));

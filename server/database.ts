@@ -76,7 +76,7 @@ const database = {
           throw err;
         }
       },
-// sanetisation
+      
       SQLescape: function(string){
         string = string.replace(/'/g, "\\'");
         string = string.replace(/"/g, '\\"');
