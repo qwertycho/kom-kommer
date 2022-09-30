@@ -1,0 +1,24 @@
+.plantContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+    width: 100%;
+}
+
+img{
+    margin: auto;
+    display: block;
+}
+
+h5{
+    text-align: center;
+}
+
+.copyright{
+    text-align: center;
+}
+
+.copyright a{
+    color: #000;
+}
+

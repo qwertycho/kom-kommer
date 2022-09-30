@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hoe groeien komkommerplanten? Zie ze langzaam groter worden">
+    <meta name="author" content="Tycho van Opstal">
+    <title>Alles over komkommers!</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/plant.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="/script/style.js" defer></script>
+    <!-- gallerij script maken -->
+    <script src="/script/cookie.js" defer></script>
+
+</head>
+
+<body>
+    <div class="header" id="header">
+        <h1>Coole komkommer foto's</h1>
+        <h3>Zó mooi heb je ze nog nooit gezien!</h3>
+    </div>
+    <nav>
+        <button class="mobile-menu-button">Menu</button>
+        <ul class="nav-bar hidden">
+            <%- nav  %>
+        </ul>
+    </nav>
+    <main>
+        <div class="main-tekst">
+            <h4>De groei van een komkommerplant</h4>
+            <div class="plantContainer" id="gallerij">
+                <div class="plant">
+                    <img src="/img/planten/11dagen.jpg" alt="11 dagen" id="img1">
+                    <h5>De plant na 11 dagen.</h5>
+                </div>
+                <div class="plant">
+                    <img src="/img/planten/18dagen.jpg" alt="18 dagen" id="img2">
+                    <h5>18 dagen</h5>
+                </div>
+                <div class="plant">
+                    <img src="/img/planten/19dagen.jpg" alt="19 dagen" id="img3">
+                    <h5>19 dagen</h5>
+                </div>
+                <div class="plant">
+                    <img src="/img/planten/5weken.jpg" alt="5 weken" id="img3">
+                    <h5>5 weken</h5>
+                </div>
+                <div class="copyright">
+                    <a href="https://vangeestkomkommers.nl/" target="_blank">
+                        Foto's met dank aan Komkommerkwekerij van Geest B.V.
+                    </a>
+                </div>
+        </div>
+    </main>
+    <%- locals.disclaimer %>
+
+    <footer>
+        <%- footer  %>
+    </footer>
+
+</body>
+
+</html>

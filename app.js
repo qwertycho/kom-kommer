@@ -1,18 +1,19 @@
 const port = 3300;
 const express = require('express');
+const router = express.Router()
 const app = express();
 var bodyParser = require('body-parser');
 const { json } = require('body-parser');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
+require('dotenv').config()
+
 app.use(cookieParser())
-// copilot magie
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // eigen functies
 const navigatie = require('./server/nav.js');
-const quiz = require('./server/quiz.js');
 const cookie = require('./server/disclaimer.js');
 
 // navigatie en footer data
@@ -28,13 +29,17 @@ app.get('/data', function(req, res) {
     res.send(data);
 });
 
-app.get('/quiz', (req, res) => {
-    res.render(__dirname + '/views/quiz', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
-});
+const quizRouter = require('./routes/quiz.js');
+app.use('/quiz', quizRouter);
+
+const adminRouter = require('./routes/admin.js');
+app.use('/dashboard', adminRouter);
 
 // dynamic route
+// deze bullshit opruimen
 app.get('/:id', (req, res) => {
     // check if filename exists
+    console.log(req.params.id);
     if(req.params.id == "" || req.params.id == null || req.params.id == undefined || req.params.id == "/"){ 
         res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});;
     } 
@@ -47,11 +52,6 @@ app.get('/:id', (req, res) => {
         }
     });
 });
-
-// quiz antwoorden
-app.post('/quizans', (req, res) => {
-    res.send(JSON.stringify(quiz.quizCheck(req.body)));
-} );
 
 // homepage
 app.get('/', (req, res) => {
