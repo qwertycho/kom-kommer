@@ -27,7 +27,6 @@ router.get('/feitjes', (req, res) => {
     console.log(req.body);
     try{
         database.loadFeitjes().then((result) => {
-            console.log(result);
             res.send(JSON.stringify(result));
         });
     } catch (err) {

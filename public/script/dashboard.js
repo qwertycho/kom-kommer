@@ -63,10 +63,11 @@ const feitjeToevoegen = document.getElementById("addFeitje");
 
 feitjeToevoegen.addEventListener("click", (e) => {
     let feitje = document.getElementById("feitje").value;
+    console.log(feitje);
     let feitjeData = {
         feit: feitje
     };
-    feitjes(e, "add", null, feitjeData);
+    feitjes(e, "add", feitjeData);
 })
 
 function deleteFeitje(e){
@@ -75,7 +76,7 @@ function deleteFeitje(e){
     let feitjeData = {
         id: id
     };
-    feitjes(e, "delete", null, feitjeData);
+    feitjes(e, "delete", feitjeData);
 }
 function updateFeitje(e){
     e.preventDefault();
@@ -85,24 +86,25 @@ function updateFeitje(e){
         feit: feitje,
         id: id
     };  
-    feitjes(e, "update", null, feitjeData);
+    feitjes(e, "update", feitjeData);
 }
 
-function feitjes(e, action, id, data){
+function feitjes(e, action, sendData){
+    console.log(sendData);
     e.preventDefault();
     switch(action){
         case "delete":
-            request('/dashboard/feitjes', 'DELETE', JSON.stringify(data)).then((result) => {
+            request('/dashboard/feitjes', 'DELETE', JSON.stringify(sendData)).then(() => {
                 showFeitjes();
             });
             break;
         case "update":
-            request('/dashboard/feitjes', 'PUT', JSON.stringify(data)).then((result) => {
+            request('/dashboard/feitjes', 'PUT', JSON.stringify(sendData)).then(() => {
                 showFeitjes();
             });
             break;
         case "add":
-            request('/dashboard/feitjes', 'POST', JSON.stringify(data)).then((result) => {
+            request('/dashboard/feitjes', 'POST', JSON.stringify(sendData)).then(() => {
                 showFeitjes();
             });
             break;
