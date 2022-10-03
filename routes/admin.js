@@ -88,6 +88,7 @@ router.put('/feitjes', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+    console.log("request for dashboard");
     console.log(req.cookies);
     if(login.admin(req.cookies.auth)){
         res.render('../views/dashboard', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
