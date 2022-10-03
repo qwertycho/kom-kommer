@@ -107,6 +107,53 @@ const database = {
           console.log(err);
           throw err;
         }
+      },
+      select: async function(data){
+        return new Promise(async (resolve, reject) => {
+          try {
+            let conn;
+            conn = await this.pool.getConnection();
+            console.log("selecting data");
+            let waardes = [];
+            
+            let query = `SELECT ${data.rows} FROM ${data.table}`;
+            if(data.where){
+              query += ` WHERE ${data.where} = ${waardes}`;
+            }
+            console.log(query);
+            
+            const rows = await conn.query(query);
+            conn.end();
+            resolve(rows);
+          } catch (err) {
+            console.log("db error");
+            console.log(err);
+            reject(err);
+          }
+        });
+      },
+      delete: async function(data){
+        return new Promise(async (resolve, reject) => {
+          try {
+            let conn;
+            conn = await this.pool.getConnection();
+            console.log("deleting data");
+                        
+            let query = `DELETE FROM ${data.table}`;
+            if(data.where){
+              query += ` WHERE ${data.where} = ${data.value}`;
+              const rows = await conn.query(query);
+              resolve(rows.effectedRows);
+            }
+            console.log(query);
+            reject("no where");
+            conn.end();
+          } catch (err) {
+            console.log("db error");
+            console.log(err);
+            reject(err);
+          }
+        });
       }
 }
 

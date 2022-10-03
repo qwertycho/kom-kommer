@@ -10,6 +10,27 @@ const login = require('../server/login.js');
 const data = require('../public/data/data.json');
 const database = require('../server/database.ts');
 
+
+router.get('/quiz', (req, res) => {
+    console.log("request for post QUIZ");
+        try{
+            const query = {
+                table: "quiz",
+                rows: ["*"],
+                where: ""
+            };
+            async function getQuiz(){
+                const quiz = await database.select(query);
+                console.log(quiz);
+                res.send(quiz);
+            }
+            getQuiz();
+        } catch (err) {
+            console.log(err);
+            res.status(500).send();
+        }
+})
+
 router.post('/quiz', (req, res) => {
     console.log("request for post QUIZ");
     if(login.admin(req.cookies.auth)){
@@ -30,6 +51,29 @@ router.post('/quiz', (req, res) => {
                 res.send(result);
             });
         } catch (err) {
+            console.log(err);
+            res.status(500).send();
+        }
+    } else {
+        console.log("post request feitjes: verkeerde auth");
+        res.status(401).send();
+    }
+})
+
+router.delete('/quiz', (req, res) => {
+    console.log("request for delete QUIZ");
+    if(login.admin(req.cookies.auth)){
+        try{
+            const query = {
+                table: "quiz",
+                value: req.body.id,
+                where: "vraagID"
+            };
+            database.delete(query).then((result) => {
+                res.send(result);
+            });
+        }
+        catch (err) {
             console.log(err);
             res.status(500).send();
         }

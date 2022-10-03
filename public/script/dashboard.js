@@ -118,6 +118,54 @@ function addVraag (e){
         goedAntwoord: goedAntwoord
     };
     request('/api/quiz', 'POST', JSON.stringify(vraagData)).then(() => {
-        // showVragen();
+        showQuiz();
     });
 }
+
+function deleteVraag(e){
+    e.preventDefault();
+    let id = this.getAttribute("id");
+    let vraagData = {
+        id: id
+    };
+    request('/api/quiz', 'DELETE', JSON.stringify(vraagData)).then(() => {
+        showQuiz();
+    });
+}
+
+async function showQuiz(){
+    document.getElementById("quizContainer").innerHTML = "";
+
+    let quiz = await request('/api/quiz', 'GET');
+    console.log(quiz);
+    let quizData = JSON.parse(quiz);
+    
+    let list = document.createElement("ul");
+    quizData.forEach(vraag => {
+        let vraagItem = document.createElement("li");
+        vraagItem.innerHTML = vraag.quizVraag;
+        let antwoord1 = document.createElement("li");
+        antwoord1.innerHTML = vraag.antwoord1;
+        let antwoord2 = document.createElement("li");
+        antwoord2.innerHTML = vraag.antwoord2;
+        let antwoord3 = document.createElement("li");
+        antwoord3.innerHTML = vraag.antwoord3;
+        let goedAntwoord = document.createElement("li");
+        goedAntwoord.innerHTML = vraag.goedAntwoord;
+        let delButton = document.createElement("button");
+        delButton.innerHTML = "Verwijder";
+        delButton.setAttribute("id", vraag.vraagID);
+        delButton.addEventListener("click", deleteVraag);
+        list.appendChild(vraagItem);
+        list.appendChild(antwoord1);
+        list.appendChild(antwoord2);
+        list.appendChild(antwoord3);
+        list.appendChild(goedAntwoord);
+        list.appendChild(delButton);
+
+        document.getElementById("quizContainer").innerHTML = "";
+        document.getElementById("quizContainer").appendChild(list);
+
+    });
+}
+showQuiz();
