@@ -14,8 +14,10 @@ const nav = navigatie.navBuilder(data);
 const database = require('../server/database.ts');
 
 router.post('/login', (req, res) => {
+    console.log("post login");
     console.log(req.cookies);
     console.log(req.body);
+    console.log(login.admin(req.cookies.auth));
     if(login.admin(req.body.auth, req.body.username, req.body.password)){
         res.cookie('auth', process.env.auth, { maxAge: 900000, httpOnly: true });
         res.redirect('/dashboard');
