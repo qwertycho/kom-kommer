@@ -31,7 +31,6 @@ const DBescape = {
         string = string.replace(/:/g, "\\:");
         string = string.replace(/,/g, "\\,");
         string = string.replace(/\./g, "\\.");
-        string = string.replace(/\s/g, "\\s");
         return string;
       },
 

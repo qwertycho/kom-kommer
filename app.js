@@ -35,6 +35,9 @@ app.use('/quiz', quizRouter);
 const adminRouter = require('./routes/admin.js');
 app.use('/dashboard', adminRouter);
 
+const apiRouter = require('./routes/api.js');
+app.use('/api', apiRouter);
+
 // dynamic route
 // deze bullshit opruimen
 app.get('/:id', (req, res) => {

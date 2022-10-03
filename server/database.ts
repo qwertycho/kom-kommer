@@ -77,6 +77,37 @@ const database = {
           throw err;
         }
       },
+
+      insert: async function(data) {
+        try {
+        let conn;
+          conn = await this.pool.getConnection();
+          console.log("inserting data");
+          console.log("table");
+          console.log(data.table);
+          console.log("rows");
+          console.log(data.rows);
+          console.log("values");
+          console.log(data.values);
+          let waardes = [];
+          
+          data.values.forEach(element => {
+            waardes.push(`'${DBescape.SQLescape(element)}'`);
+          });
+
+          const query = `"INSERT INTO ${data.table} (${data.rows}) VALUES (${waardes})"`;
+          console.log(query);
+          
+          const rows = await conn.query(`INSERT INTO ${data.table} (${data.rows}) VALUES (${waardes})`);
+
+          conn.end();
+          return "rows";
+        } catch (err) {
+          console.log("db error");
+          console.log(err);
+          throw err;
+        }
+      }
 }
 
 module.exports = database;
