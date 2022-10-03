@@ -14,6 +14,7 @@ const nav = navigatie.navBuilder(data);
 const database = require('../server/database.ts');
 
 router.post('/login', (req, res) => {
+    console.log(req.body);
     if(login.admin(req.body.auth, req.body.username, req.body.password)){
         res.cookie('auth', process.env.auth, { maxAge: 900000, httpOnly: true });
         res.redirect('/dashboard');
@@ -87,6 +88,7 @@ router.put('/feitjes', (req, res) => {
 });
 
 router.get('/', (req, res) => {
+    console.log(req.cookies);
     if(login.admin(req.cookies.auth)){
         res.render('../views/dashboard', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
     } else {
