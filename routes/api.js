@@ -20,8 +20,17 @@ router.get('/quiz', (req, res) => {
                 where: ""
             };
             async function getQuiz(){
-                const quiz = await database.select(query);
-                console.log(quiz);
+                const data = await database.select(query);
+                console.log(data);
+                let quiz = [];
+                for (let i = 0; i < data.length; i++) {
+                    let quizStuk = {
+                        vraagID: data[i].vraagID,
+                        quizVraag: data[i].quizVraag,
+                        antwoord: [data[i].antwoord1, data[i].antwoord2, data[i].antwoord3],
+                    }
+                    quiz.push(quizStuk);
+                }
                 res.send(quiz);
             }
             getQuiz();

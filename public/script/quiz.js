@@ -4,33 +4,29 @@ const next = document.querySelector('.next');
 const vraag = document.querySelector('.vraag');
 const progress = document.querySelector('.progress-bar');
 
-const quiz = [
-    vraag1 = {
-        vraag: "Welke kleur heeft een komkommer?",
-        antwoorden: ["geel", "bruin", "groen"],
-    },
-    vraag2 = {
-        vraag: "Hoe groeit een komkommer?",
-        antwoorden: ["aan een boom", "in de grond", "aan een plant"],
-    },
-    vraag3 = {
-        vraag: "Wat is de ideale groei temperatuur van een komkommer?",
-        antwoorden: ["21-25 graden", "26-31 graden", "15-20 graden"],
-    },
-    vraag4 = {
-        vraag: "Wat kan je met komkommers maken?",
-        antwoorden: ["augurken", "ijs", "stampot"],
-    },
-    vraag5 = {
-        vraag: "Hoe bewaar je het beste een komkommer?",
-        antwoorden: ["< 10 graden", "10-13 graden", "13-18 graden"],
+let quiz = [];
+
+let xhr = new XMLHttpRequest();
+xhr.open('GET', '/api/quiz', true);
+xhr.onload = function () {
+    if (this.status == 200) {
+        let data = JSON.parse(this.responseText);
+        // quiz.push(data);
+        quiz = data;
+        console.log(quiz);
+        setAntwoorden();
+
+    } else {
+        console.log("error");
+        console.log(this.responseText);
     }
-];
+}
+xhr.send();
+
 
 let vraagNummer = 0;
 let antwoorden = [];
 
-setAntwoorden();
 
 // de vorige vraag laden en antwoord verwijderen
 prev.addEventListener('click', () => {
@@ -59,9 +55,9 @@ next.addEventListener('click', () => {
 
 // de vragen en antwoorden tonen
 function setAntwoorden(){
-    vraag.innerHTML = quiz[vraagNummer].vraag;
+    vraag.innerHTML = quiz[vraagNummer].quizVraag;
     for (let i = 0; i < document.querySelectorAll('.antwoord').length; i++) {
-        document.querySelectorAll('.ans')[i].innerHTML = quiz[vraagNummer].antwoorden[i];
+        document.querySelectorAll('.ans')[i].innerHTML = quiz[vraagNummer].antwoord[i];
         progress.style.width = `${(vraagNummer + 1) / quiz.length * 100}%`;
     }
     if (vraagNummer == quiz.length -1) {
