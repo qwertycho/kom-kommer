@@ -118,7 +118,7 @@ const database = {
             
             let query = `SELECT ${data.rows} FROM ${data.table}`;
             if(data.where){
-              query += ` WHERE ${data.where} = ${waardes}`;
+              query += ` WHERE ${data.where} = ${data.waardes}`;
             }
             console.log(query);
             

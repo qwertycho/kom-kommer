@@ -145,13 +145,13 @@ async function showQuiz(){
         let vraagItem = document.createElement("li");
         vraagItem.innerHTML = vraag.quizVraag;
         let antwoord1 = document.createElement("li");
-        antwoord1.innerHTML = vraag.antwoord1;
+        antwoord1.innerHTML = vraag.antwoorden[0];
         let antwoord2 = document.createElement("li");
-        antwoord2.innerHTML = vraag.antwoord2;
+        antwoord2.innerHTML = vraag.antwoorden[1];
         let antwoord3 = document.createElement("li");
-        antwoord3.innerHTML = vraag.antwoord3;
+        antwoord3.innerHTML = vraag.antwoorden[2];
         let goedAntwoord = document.createElement("li");
-        goedAntwoord.innerHTML = vraag.goedAntwoord;
+        goedAntwoord.innerHTML = vraag.juisteAntwoord;
         let delButton = document.createElement("button");
         delButton.innerHTML = "Verwijder";
         delButton.setAttribute("id", vraag.vraagID);

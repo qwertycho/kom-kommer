@@ -57,7 +57,7 @@ next.addEventListener('click', () => {
 function setAntwoorden(){
     vraag.innerHTML = quiz[vraagNummer].quizVraag;
     for (let i = 0; i < document.querySelectorAll('.antwoord').length; i++) {
-        document.querySelectorAll('.ans')[i].innerHTML = quiz[vraagNummer].antwoord[i];
+        document.querySelectorAll('.ans')[i].innerHTML = quiz[vraagNummer].antwoorden[i];
         progress.style.width = `${(vraagNummer + 1) / quiz.length * 100}%`;
     }
     if (vraagNummer == quiz.length -1) {
@@ -68,13 +68,16 @@ function setAntwoorden(){
 function sendQuiz () {
     try{        
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/quiz', true);
+        xhr.open('POST', '/api/checkQuiz', true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
             let score = this.responseText;
             showscore(score);
         }
-        xhr.send(JSON.stringify(antwoorden));
+        let data = {
+            antwoorden: antwoorden
+        }
+        xhr.send(JSON.stringify(data));
 
     } catch(err){
             console.log(err);
@@ -86,7 +89,13 @@ function sendQuiz () {
 function getAntwoorden() {
    for (let i = 0; i < document.querySelectorAll('.antwoord').length; i++) {
        if (document.querySelectorAll('.antwoord')[i].checked) {
-           antwoorden[vraagNummer] = document.querySelectorAll('.antwoord')[i].value;
+        let vraagID = quiz[vraagNummer].vraagID;
+        let antwoord = {
+            ID: vraagID,
+            antwoord: document.querySelectorAll('.antwoord')[i].value
+        }
+        console.log(antwoord);
+           antwoorden[vraagNummer] = antwoord;
            break;
        }
     }       
@@ -95,16 +104,8 @@ function getAntwoorden() {
 function showscore(score){
     const scoreDiv = document.createElement('div');
     scoreDiv.classList.add('score');
-    if(score == 5){
-        scoreDiv.innerHTML = `Je score is: ${score}/5`;
-        scoreDiv.innerHTML += `<br>Jij bent echt een komkommer-kenner!`;
-    } else if(score > 2){
-        scoreDiv.innerHTML = `Je score is: ${score}/5`;
-        scoreDiv.innerHTML += `<br>Jij bent nog geen komkommer-kenner!`;
-    } else {
-        scoreDiv.innerHTML = `Je score is: ${score}/5`;
-        scoreDiv.innerHTML += `<br>Jij bent een komkommer noob!`;
-    }
+        scoreDiv.innerHTML = score;
+   
     main.innerHTML = "";
     main.appendChild(scoreDiv);
 }
