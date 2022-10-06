@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 // eigen functies
 const navigatie = require('./server/nav.js');
 const cookie = require('./server/disclaimer.js');
+const database = require('./server/database.ts');
 
 // navigatie en footer data
 const data = require('./public/data/data.json');
@@ -36,6 +37,7 @@ const adminRouter = require('./routes/admin.js');
 app.use('/dashboard', adminRouter);
 
 const apiRouter = require('./routes/api.js');
+const { query } = require('express');
 app.use('/api', apiRouter);
 
 // dynamic route
@@ -51,6 +53,12 @@ app.get('/:id', (req, res) => {
             res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
         } else {
             console.log(err);
+            let query = {
+                table: "badPages",
+                rows: ["url"],
+                values: [req.params.id]
+            }
+            database.insert(query);
             res.status(404).sendFile(__dirname + '/views/404.html');
         }
     });
@@ -63,6 +71,12 @@ app.get('/', (req, res) => {
 
 // 404 handler
 app.use(function (req,res,next){
+    let query = {
+        table: "badPages",
+        rows: ["url"],
+        values: [req.url]
+    }
+    database.insert(query);
 	res.status(404).send('Verkeerde pagina jij bergkip');
 });
 
