@@ -109,15 +109,26 @@ router.post('/checkQuiz', (req, res) => {
     console.log("request voor controle quiz");
     try{
     let userAnswers = req.body.antwoorden;
-    console.log(userAnswers);
         let score = 0;
         let goedAntwoorden = [];
 
+        function saveData(){
+            userAnswers.forEach((answer) => {
+                let query = {
+                    table: "quizResultaten",
+                    rows: ["vraagID", "antwoord"],
+                    values: [answer.ID, answer.antwoord]
+                }
+                database.insert(query);
+            });
+        }
+
       async function getGoedAntwoorden(){
+        saveData();
         userAnswers.forEach(element => {
             let query = {
                 table: "quiz",
-                rows: "*",
+                rows: "goedAntwoord",
                 where: "vraagID",
                 waardes: element.ID
             };
