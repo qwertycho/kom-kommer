@@ -1,38 +1,45 @@
 const DBescape = {
     SQLescape: function(string){
-        string = string.replace(/'/g, "\\'");
-        string = string.replace(/"/g, '\"');
-        string = string.replace(/\\/g, "\\\\");
-        string = string.replace(/`/g, "\\`");
-        string = string.replace(/\$/g, "\\$");
-        string = string.replace(/%/g, "\\%");
-        string = string.replace(/;/g, "\\;");
-        string = string.replace(/</g, "\<");
-        string = string.replace(/>/g, "\>");
-        string = string.replace(/\(/g, "\\(");
-        string = string.replace(/\)/g, "\\)");
-        string = string.replace(/\+/g, "\\+");
-        string = string.replace(/\-/g, "\\-");
-        string = string.replace(/\*/g, "\\*");
-        string = string.replace(/\//g, "\\/");
-        string = string.replace(/\^/g, "\\^");
-        string = string.replace(/=/g, "\\=");
-        string = string.replace(/!/g, "\\!");
-        string = string.replace(/#/g, "\\#");
-        string = string.replace(/~/g, "\\~");
-        string = string.replace(/@/g, "\\@");
-        string = string.replace(/&/g, "\\&");
-        string = string.replace(/\|/g, "\\|");
-        string = string.replace(/\[/g, "\\[");
-        string = string.replace(/\]/g, "\\]");
-        string = string.replace(/\{/g, "\\{");
-        string = string.replace(/\}/g, "\\}");
-        string = string.replace(/\?/g, "\\?");
-        string = string.replace(/:/g, "\\:");
-        string = string.replace(/,/g, "\\,");
-        string = string.replace(/\./g, "\\.");
-        string = string.replace(/\s/g, "\\s");
+      try{
+        if(isNaN(string)){
+          string = string.replace(/'/g, "\\'");
+          string = string.replace(/"/g, '\"');
+          string = string.replace(/\\/g, "\\\\");
+          string = string.replace(/`/g, "\\`");
+          string = string.replace(/\$/g, "\\$");
+          string = string.replace(/%/g, "\\%");
+          string = string.replace(/;/g, "\\;");
+          string = string.replace(/</g, "\<");
+          string = string.replace(/>/g, "\>");
+          string = string.replace(/\(/g, "\\(");
+          string = string.replace(/\)/g, "\\)");
+          string = string.replace(/\+/g, "\\+");
+          string = string.replace(/\-/g, "\\-");
+          string = string.replace(/\*/g, "\\*");
+          string = string.replace(/\//g, "\\/");
+          string = string.replace(/\^/g, "\\^");
+          string = string.replace(/=/g, "\\=");
+          string = string.replace(/!/g, "\\!");
+          string = string.replace(/#/g, "\\#");
+          string = string.replace(/~/g, "\\~");
+          string = string.replace(/@/g, "\\@");
+          string = string.replace(/&/g, "\\&");
+          string = string.replace(/\|/g, "\\|");
+          string = string.replace(/\[/g, "\\[");
+          string = string.replace(/\]/g, "\\]");
+          string = string.replace(/\{/g, "\\{");
+          string = string.replace(/\}/g, "\\}");
+          string = string.replace(/\?/g, "\\?");
+          string = string.replace(/:/g, "\\:");
+          string = string.replace(/,/g, "\\,");
+          string = string.replace(/\./g, "\\.");
+          return string;
+        } else {
+          return string;
+        }
+      }catch(e){
         return string;
+      }
       },
 
       SQLunescape: function(string){
