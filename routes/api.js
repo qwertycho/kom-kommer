@@ -109,55 +109,46 @@ router.delete('/quiz', (req, res) => {
 router.post('/checkQuiz', (req, res) => {
     console.log("request voor controle quiz");
     try{
-        let data = req.body.antwoorden;
+    let userAnswers = req.body.antwoorden;
+    console.log(userAnswers);
         let score = 0;
         let goedAntwoorden = [];
-            data.forEach(element => {
-                async function checkQuiz(){
-                const query = {
-                    table: "quiz",
-                    rows: ["goedAntwoord"],
-                    where: "vraagID",
-                    waardes: element.ID
-                };
-                const DBdata = await database.select(query)
-                scoreTellen();
-                console.log("scroetelelel");
-                goedAntwoorden.push(DBdata[0].goedAntwoord);
-            }
-                checkQuiz();
 
-
+      async function getGoedAntwoorden(){
+        userAnswers.forEach(element => {
+            let query = {
+                table: "quiz",
+                rows: "*",
+                where: "vraagID",
+                waardes: element.ID
+            };
+            database.select(query).then((result) => {
+                console.log("goed " + result[0].goedAntwoord + " user " + result[0].vraagID);
+                console.log("user " + element.antwoord +  " " + element.ID);
+                goedAntwoorden.push(result[0].goedAntwoord);
+                if(element.antwoord == result[0].goedAntwoord){
+                    score++;
+                }
+                if(goedAntwoorden.length == userAnswers.length){
+                   showScore();
+                }
             });
-            let aantalVragen = Object.keys(data).length
-            function scoreTellen(){
-                score = 0;
-                console.log(goedAntwoorden.length);
-                goedAntwoorden.forEach(element => {
-                    if(element == data.antwoord){
-                        score++;
-                    }
-                    console.log("xxxxxxxxxxxxxxxxxxxxxx");
-                    console.log(goedAntwoorden.length)
-                    console.log(aantalVragen);
-                console.log("xxxxxxxxxxxxxxxxxxxxxx");
-                    if(goedAntwoorden.length == aantalVragen){
-                        let zin;
+        });
+    }
 
-                        if(score == aantalVragen){
-                            zin = "Jij bent echt een komkommer expert! Je hebt alle vragen goed beantwoord!";
-                        } else if(score > aantalVragen/2){
+    function showScore(){
+        console.log("showscore");
+        if(score == goedAntwoorden.length){
+            uitslag = `Jij hebt ${score} van de ${goedAntwoorden.length} vragen goed beantwoord! <br> Jij bent echt een komkommer expert!`;
+        } else if(score == goedAntwoorden.length/2){
+            uitslag = `Jij hebt ${score} van de ${goedAntwoorden.length} vragen goed beantwoord! <br> Jij bent een beetje een komkommer kenner!`;
+        } else {
+            uitslag = `Jij hebt ${score} van de ${goedAntwoorden.length} vragen goed beantwoord! <br> Jij bent een komkommer noob!`;
+        }
 
-                            zin = "Jij bent een komkommer kenner!";
-                        } else {
-                            zin = "Jij bent een komkommer noob! Leer wat meer over komkommers!  ";
-                            }
-
-                        res.send(`Je hebt ${score} van de ${aantalVragen} vragen goed! <br> ${zin}`);
-                    }
-                });
-            }
-
+        res.send(uitslag);
+    }
+    getGoedAntwoorden();
 
     } catch (err) {
         console.log(err);
