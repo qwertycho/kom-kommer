@@ -137,7 +137,6 @@ async function showQuiz(){
     document.getElementById("quizContainer").innerHTML = "";
 
     let quiz = await request('/api/quiz', 'GET');
-    console.log(quiz);
     let quizData = JSON.parse(quiz);
     
     let list = document.createElement("ul");

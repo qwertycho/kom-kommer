@@ -6,6 +6,5 @@ const login = {
             return false;
         }
     }
-
 }
 module.exports = login;

@@ -21,7 +21,6 @@ async function request(url, method, data){
 
 async function showFeitjes(){
     let feitjes = await request('/dashboard/feitjes', 'GET');
-    console.log(feitjes);
     const list = document.createElement('ol');
     for (let i = 0; i < feitjes.length; i++) {
         const listItem = document.createElement('li');

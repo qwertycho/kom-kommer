@@ -21,7 +21,6 @@ router.get('/quiz', (req, res) => {
                 where: ""
             };
             const data = await database.select(query);
-            console.log(data);
             let quiz = [];
 
             if(!login.admin(req.cookies.auth)){
@@ -123,8 +122,6 @@ router.post('/checkQuiz', (req, res) => {
                 waardes: element.ID
             };
             database.select(query).then((result) => {
-                console.log("goed " + result[0].goedAntwoord + " user " + result[0].vraagID);
-                console.log("user " + element.antwoord +  " " + element.ID);
                 goedAntwoorden.push(result[0].goedAntwoord);
                 if(element.antwoord == result[0].goedAntwoord){
                     score++;

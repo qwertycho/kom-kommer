@@ -13,7 +13,6 @@ xhr.onload = function () {
         let data = JSON.parse(this.responseText);
         // quiz.push(data);
         quiz = data;
-        console.log(quiz);
         setAntwoorden();
 
     } else {
@@ -94,7 +93,6 @@ function getAntwoorden() {
             ID: vraagID,
             antwoord: document.querySelectorAll('.antwoord')[i].value
         }
-        console.log(antwoord);
            antwoorden[vraagNummer] = antwoord;
            break;
        }
