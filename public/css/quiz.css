@@ -67,7 +67,7 @@ main{
 
 .quiz .progress-bar{
     height: 100%;
-    background-color: green;
+    background-color: var(--green);
     border-radius: 5px;
 }
 
