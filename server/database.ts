@@ -130,14 +130,8 @@ const database = {
             
               const rows = await conn.query(query);
               conn.end();
-              let result = [];
-              rows.forEach(element => {
-                let string = element.feit;
-                string = DBescape.SQLunescape(string);
-                result.push(DBescape.HTMLescape(string));
-              });
 
-            resolve(result);
+            resolve(rows);
           } catch (err) {
               console.log("db error");
               console.log(err);
