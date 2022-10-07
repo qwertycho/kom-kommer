@@ -205,8 +205,13 @@ router.get('/public/feitjes', (req, res) => {
                         res.send(escape(result));
                     })
                     break;
+                    default:
+                    res.status(404).send("Geen geldige actie");
+
                 }
 
+        } else{
+            res.status(400).send("action parameter is niet meegegeven");
         }
     } catch (err) {
         console.log(err);
@@ -214,10 +219,14 @@ router.get('/public/feitjes', (req, res) => {
     }
 
     function escape(array){
-        array.forEach(element => {
-            element.feit = DBescape.SQLunescape(element.feit);
-        });
-        return array;
+        try{
+            array.forEach(element => {
+                element.feit = DBescape.SQLunescape(element.feit);
+            });
+            return array;
+        } catch (err) {
+            console.log(err);
+        }
     }
 })
 
