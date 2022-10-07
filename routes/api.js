@@ -164,6 +164,55 @@ router.post('/checkQuiz', (req, res) => {
     }
 })
 
+router.get('/public/feitjes', (req, res) => {
+    try{
+        let url = req.url;
+        let params = url.split("?");
+        if (params[1].includes("action")){
+            console.log("request for get FEITJES");
+            let action = params[1].split("=");
+            console.log(action[1]);
+            switch(action[1]){
+                case "nieuw":
+                    let nieuwQuery = {
+                        table: "feitjes",
+                        rows: "feit",
+                        order: "feit_id DESC",
+                        limit: 1
+                    };
+                    database.select(nieuwQuery).then((result) => {
+                        res.send(result);
+                    })
+                    break;
+                case "random":
+                    let randQuery = {
+                        table: "feitjes",
+                        rows: "feit",
+                        order: "RAND()",
+                        limit: 1
+                    };
+                    database.select(randQuery).then((result) => {
+                        res.send(result);
+                    })
+                    break;
+                    case "all":
+                    let allQuery = {
+                        table: "feitjes",
+                        rows: "feit",
+                    };
+                    database.select(allQuery).then((result) => {
+                        res.send(result);
+                    })
+                    break;
+                }
+
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
 
 
 module.exports = router;
