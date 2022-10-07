@@ -9,6 +9,7 @@ const { json } = require('express/lib/response.js');
 const login = require('../server/login.js');
 const data = require('../public/data/data.json');
 const database = require('../server/database.ts');
+const DBescape = require("../server/DBescape");
 
 
 router.get('/quiz', (req, res) => {
@@ -181,7 +182,7 @@ router.get('/public/feitjes', (req, res) => {
                         limit: 1
                     };
                     database.select(nieuwQuery).then((result) => {
-                        res.send(result);
+                        res.send(escape(result));
                     })
                     break;
                 case "random":
@@ -192,7 +193,7 @@ router.get('/public/feitjes', (req, res) => {
                         limit: 1
                     };
                     database.select(randQuery).then((result) => {
-                        res.send(result);
+                        res.send(escape(result));
                     })
                     break;
                     case "all":
@@ -201,7 +202,7 @@ router.get('/public/feitjes', (req, res) => {
                         rows: "feit",
                     };
                     database.select(allQuery).then((result) => {
-                        res.send(result);
+                        res.send(escape(result));
                     })
                     break;
                 }
@@ -210,6 +211,13 @@ router.get('/public/feitjes', (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).send();
+    }
+
+    function escape(array){
+        array.forEach(element => {
+            element.feit = DBescape.SQLunescape(element.feit);
+        });
+        return array;
     }
 })
 
