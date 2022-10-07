@@ -120,15 +120,28 @@ const database = {
             if(data.where){
               query += ` WHERE ${data.where} = ${data.waardes}`;
             }
+            if(data.order){
+              query += ` ORDER BY ${data.order}`;
+            }
+            if(data.limit){
+              query += ` LIMIT ${data.limit}`;
+            }
             console.log(query);
             
-            const rows = await conn.query(query);
-            conn.end();
-            resolve(rows);
+              const rows = await conn.query(query);
+              conn.end();
+              let result = [];
+              rows.forEach(element => {
+                let string = element.feit;
+                string = DBescape.SQLunescape(string);
+                result.push(DBescape.HTMLescape(string));
+              });
+
+            resolve(result);
           } catch (err) {
-            console.log("db error");
-            console.log(err);
-            reject(err);
+              console.log("db error");
+              console.log(err);
+              reject(err);
           }
         });
       },
