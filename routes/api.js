@@ -13,7 +13,6 @@ const DBescape = require("../server/DBescape");
 
 
 router.get('/quiz', (req, res) => {
-    console.log("request for post QUIZ");
     try{
         async function getQuiz(){
             const query = {
@@ -55,7 +54,6 @@ router.get('/quiz', (req, res) => {
 })
 
 router.post('/quiz', (req, res) => {
-    console.log("request for post QUIZ");
     if(login.admin(req.cookies.auth)){
         try{
             let waardes = [];
@@ -107,7 +105,6 @@ router.delete('/quiz', (req, res) => {
 })
 
 router.post('/checkQuiz', (req, res) => {
-    console.log("request voor controle quiz");
     try{
     let userAnswers = req.body.antwoorden;
         let score = 0;
@@ -146,7 +143,6 @@ router.post('/checkQuiz', (req, res) => {
     }
 
     function showScore(){
-        console.log("showscore");
         if(score == goedAntwoorden.length){
             uitslag = `Jij hebt ${score} van de ${goedAntwoorden.length} vragen goed beantwoord! <br> Jij bent echt een komkommer expert!`;
         } else if(score == goedAntwoorden.length/2){
@@ -170,9 +166,7 @@ router.get('/public/feitjes', (req, res) => {
         let url = req.url;
         let params = url.split("?");
         if (params[1].includes("action")){
-            console.log("request for get FEITJES");
             let action = params[1].split("=");
-            console.log(action[1]);
             switch(action[1]){
                 case "nieuw":
                     let nieuwQuery = {

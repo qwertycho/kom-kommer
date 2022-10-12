@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alles over komkommers!</title>
+    <meta name="description" content="Lees leuke en interessante feitjes over komkommers">
+    <meta name="author" content="Tycho van Opstal">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/feitjes.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="/script/style.js" defer></script>
+    <script src="/script/cookie.js" defer></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png">
+
+</head>
+
+<body>
+    <div class="header" id="header">
+        <h1>Epische komkommer api's</h1>
+        <h3>Want wie wilt er geen komkommer api!</h3>
+    </div>
+    <nav>
+        <button class="mobile-menu-button">Menu</button>
+        <ul class="nav-bar hidden">
+            <%- nav  %>
+        </ul>
+    </nav>
+    <main>
+        <div class="main-tekst">
+            <h4>Documentatie</h4>
+            <div class="docs white-background" id="docs">
+                <pre>
+Feitjes api:
+    De komkommer feitjes zijn op te vragen met de volgende url:
+    komkommer.eu/api/public/feitjes
+
+    Er zijn drie verschillende acties in te stellen met de volgende parameters:
+    ?action=all
+      alle feitjes
+    ?action=random
+      een willekeurig feitje
+    ?action=nieuw
+      het nieuwste feitje
+
+    *De action parameter is verplicht
+                </pre>
+            </div>
+        </div>
+        <img src="/img/plant.jpg" alt="komkommers">
+    </main>
+
+    <%- locals.disclaimer %>
+
+    <footer>
+        <%- footer  %>
+    </footer>
+
+</body>
+
+</html>

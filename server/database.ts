@@ -82,13 +82,6 @@ const database = {
         try {
         let conn;
           conn = await this.pool.getConnection();
-          console.log("inserting data");
-          console.log("table");
-          console.log(data.table);
-          console.log("rows");
-          console.log(data.rows);
-          console.log("values");
-          console.log(data.values);
           let waardes = [];
           
           data.values.forEach(element => {
@@ -98,7 +91,7 @@ const database = {
           const query = `"INSERT INTO ${data.table} (${data.rows}) VALUES (${waardes})"`;
           console.log(query);
           
-          const rows = await conn.query(`INSERT INTO ${data.table} (${data.rows}) VALUES (${waardes})`);
+          const rows = await conn.query(query);
 
           conn.end();
           return "rows";
@@ -113,7 +106,6 @@ const database = {
           try {
             let conn;
             conn = await this.pool.getConnection();
-            console.log("selecting data");
             let waardes = [];
             
             let query = `SELECT ${data.rows} FROM ${data.table}`;
@@ -144,7 +136,6 @@ const database = {
           try {
             let conn;
             conn = await this.pool.getConnection();
-            console.log("deleting data");
                         
             let query = `DELETE FROM ${data.table}`;
             if(data.where){
