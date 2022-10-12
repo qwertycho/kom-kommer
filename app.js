@@ -7,7 +7,6 @@ const { json } = require('body-parser');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 require('dotenv').config()
-const IP = require('ip');
 
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,11 +53,10 @@ app.get('/:id', (req, res) => {
             res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
         } else {
             console.log(err);
-            const ipAddress = IP.address();
             let query = {
                 table: "badPages",
-                rows: ["url", "ip"],
-                values: [req.url, ipAddress]
+                rows: ["url",],
+                values: [req.url]
             }
             database.insert(query);
             res.status(404).sendFile(__dirname + '/views/404.html');
@@ -73,11 +71,10 @@ app.get('/', (req, res) => {
 
 // 404 handler
 app.use(function (req,res,next){
-    const ipAddress = IP.address();
     let query = {
         table: "badPages",
-        rows: ["url", "ip"],
-        values: [req.url, ipAddress]
+        rows: ["url",],
+        values: [req.url]
     }
     database.insert(query);
 	res.status(404).send('Verkeerde pagina jij bergkip');
