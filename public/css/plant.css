@@ -1,3 +1,7 @@
+.main-container{
+    width: 100%;
+}
+
 .plantContainer{
     display: flex;
     flex-direction: column;
