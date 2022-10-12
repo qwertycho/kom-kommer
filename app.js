@@ -53,10 +53,11 @@ app.get('/:id', (req, res) => {
             res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
         } else {
             console.log(err);
+            const ipAddress = req.socket.remoteAddress;
             let query = {
                 table: "badPages",
-                rows: ["url"],
-                values: [req.params.id]
+                rows: ["url", "ip"],
+                values: [req.url, ipAddress]
             }
             database.insert(query);
             res.status(404).sendFile(__dirname + '/views/404.html');
@@ -71,10 +72,11 @@ app.get('/', (req, res) => {
 
 // 404 handler
 app.use(function (req,res,next){
+    const ipAddress = req.socket.remoteAddress;
     let query = {
         table: "badPages",
-        rows: ["url"],
-        values: [req.url]
+        rows: ["url", "ip"],
+        values: [req.url, ipAddress]
     }
     database.insert(query);
 	res.status(404).send('Verkeerde pagina jij bergkip');
