@@ -161,7 +161,24 @@ const database = {
             reject(err);
           }
         });
+      },
+
+      getURL: async function() {
+        try {
+        let conn;
+          conn = await this.pool.getConnection();
+
+          // select top 5 most common urls
+          const rows = await conn.query("SELECT url, COUNT(url) AS count FROM badPages GROUP BY url ORDER BY count DESC LIMIT 5");
+          conn.end();
+          return rows;
+        } catch (err) {
+          console.log("db error");
+          console.log(err);
+          throw err;
+        }
       }
+
 }
 
 module.exports = database;

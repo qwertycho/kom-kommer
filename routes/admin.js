@@ -12,9 +12,9 @@ const data = require('../public/data/data.json');
 const navigatie = require('../server/nav.js');
 const nav = navigatie.navBuilder(data);
 const database = require('../server/database.ts');
+const { isPrivate } = require('ip');
 
 router.post('/login', (req, res) => {
-    console.log("post login");
     if(login.admin(req.body.auth, req.body.username, req.body.password)){
         res.cookie('auth', process.env.auth, { maxAge: 900000, httpOnly: true });
         res.redirect('/dashboard');
@@ -25,7 +25,6 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/feitjes', (req, res) => {
-    console.log("request for feitjes");
     try{
         database.loadFeitjes().then((result) => {
             res.send(JSON.stringify(result));
@@ -35,7 +34,6 @@ router.get('/feitjes', (req, res) => {
         res.status(500).send();
     }
 }).post('/feitjes', (req, res) => {
-    console.log("request for post feitjes");
     if(login.admin(req.cookies.auth)){
         try{
             database.addFeitje(req.body.feit).then(() => {
@@ -51,7 +49,6 @@ router.get('/feitjes', (req, res) => {
     }
 })
 router.delete('/feitjes', (req, res) => {
-    console.log("delete request");
     if(login.admin(req.cookies.auth)){
         console.log("request for  put in feitjes");
         try{
@@ -70,7 +67,6 @@ router.delete('/feitjes', (req, res) => {
 })
 
 router.put('/feitjes', (req, res) => {
-    console.log("request for  put in feitjes");
         if(login.admin(req.cookies.auth)){
         try{
             database.updateFeitje(req.body.id, req.body.feit).then(() => {
@@ -87,8 +83,34 @@ router.put('/feitjes', (req, res) => {
     }
 });
 
+// route voor het opvragen van de statistieken over de 404 errors
+router.get('/urls', (req, res) => {
+    if(login.admin(req.cookies.auth)){
+        try{
+            // de DB returnt een array met daarin de de objecten met url en count
+            // helaas is de count een bigint en die kan niet naar JSON
+            // dus eerst omzetten naar een normale int
+            database.getURL().then((result) => {
+                let arr = [];
+                result.forEach(element => {
+                    let obj = {
+                        url: element.url,
+                        count: Number(element.count),
+                    }
+                    arr.push(obj);
+                });
+                res.send(arr);
+            });
+        } catch (err) {
+            console.log(err);
+            res.status(500).send();
+        }
+    } else {
+        res.status(401).send("geen toegang");
+    }
+});
+
 router.get('/', (req, res) => {
-    console.log("request for dashboard");
     if(login.admin(req.cookies.auth)){
         res.render('../views/dashboard', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
     } else {

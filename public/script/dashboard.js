@@ -166,5 +166,18 @@ async function showQuiz(){
         document.getElementById("quizContainer").appendChild(list);
 
     });
-}
-showQuiz();
+} showQuiz();
+
+async function urls(){
+    let url = await request('/dashboard/urls', 'GET');
+    let urlData = JSON.parse(url);
+    console.log(urlData);
+let list = document.getElementById("404List");
+    urlData.forEach(url => {
+        let urlItem = document.createElement("li");
+        urlItem.innerHTML = `${url.url} - ${url.count}`;
+        list.appendChild(urlItem);
+    });
+    document.getElementById("urlContainer").innerHTML = "";
+    document.getElementById("urlContainer").appendChild(list);
+} urls();
