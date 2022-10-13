@@ -12,7 +12,7 @@ const data = require('../public/data/data.json');
 const navigatie = require('../server/nav.js');
 const nav = navigatie.navBuilder(data);
 const database = require('../server/database.ts');
-const { isPrivate } = require('ip');
+const { query } = require('express');
 
 router.post('/login', (req, res) => {
     if(login.admin(req.body.auth, req.body.username, req.body.password)){
@@ -108,6 +108,66 @@ router.get('/urls', (req, res) => {
     } else {
         res.status(401).send("geen toegang");
     }
+});
+
+router.get("/stats/:id" , (req, res) => {
+    if(login.admin(req.cookies.auth)){
+        try{
+            const aanvraag = req.params.id;
+            
+            let query = {}
+            switch(aanvraag){
+                case "url":
+            // de DB returnt een array met daarin de de objecten met url en count
+            // helaas is de count een bigint en die kan niet naar JSON
+            // dus eerst omzetten naar een normale int
+                    database.getURL().then((result) => {
+                        let arr = [];
+                        result.forEach(element => {
+                            let obj = {
+                                url: element.url,
+                                count: Number(element.count),
+                            }
+                            arr.push(obj);
+                        });
+                        res.send(arr);
+                    });
+                break;
+                case "quizVragen":
+                    query = {
+                        table: "quiz",
+                        rows: ["vraagID, quizVraag"],
+
+                    }
+                    database.select(query).then((result) => {
+                        res.send(result);
+                    });
+                break;
+                case "quizStats":
+                    let vraagID = req.url.split("?")[1];
+                    query = {
+                        table: "quizResultaten",
+                        rows: ["antwoord"],
+                        where: "vraagID = " + vraagID,
+                    }
+                    database.quizStats(query).then((result) => {
+                        console.log(result);
+                        result.vragen.forEach(element => {
+                            element.count = Number(element.count);
+                        });
+                        result.count = Number(result.count);
+                        res.send(result);
+                    });
+                break;
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send();
+        }
+    } else {
+        res.status(401).send("geen toegang");
+    }
+
 });
 
 router.get('/', (req, res) => {

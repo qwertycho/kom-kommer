@@ -181,3 +181,46 @@ let list = document.getElementById("404List");
     document.getElementById("urlContainer").innerHTML = "";
     document.getElementById("urlContainer").appendChild(list);
 } urls();
+
+function getQuizStats(e){
+    e.preventDefault();
+    let quizSelect = document.getElementById("quizSelect");
+
+    // log selected option
+    let quizID = quizSelect.options[quizSelect.selectedIndex].value;
+    fetch(`/dashboard/stats/quizStats?${quizID}`, {
+    }).then((response) => {
+        response.json().then((data) => {
+            console.log(data);
+
+            let chart = new CanvasJS.Chart("barChart");
+            // het totaal aantal antwoorden opslaan
+            
+            // van iedere vraag het % van de antwoorden opslaan
+
+            // voor ieder antwoord een bar maken en de hoogte van de bar bepalen aan de hand van het % van de antwoorden
+
+
+        });
+    });
+}
+
+// vraagt alle vragen uit de quiz op
+function getQuizVragen(){
+    // omdat de eerste response een promise is, zijn er twee .then() nodig
+   fetch('/dashboard/stats/quizVragen').then((response) => {
+    // de response wordt omgezet naar een json object
+    response.json().then((data) => {
+        data.forEach(vraag => {
+            // de vragen worden toegevoegd aan de select
+            // de id van de vraag wordt meegegeven als value zodat deze later gebruikt kan worden
+            let select = document.getElementById("quizSelect");
+            let option = document.createElement("option");
+            option.innerHTML = vraag.quizVraag;
+            option.setAttribute("value", vraag.vraagID);
+            select.appendChild(option);
+            select.addEventListener("change", getQuizStats);
+        });
+    });
+   });
+} getQuizVragen();
