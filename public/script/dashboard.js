@@ -166,5 +166,68 @@ async function showQuiz(){
         document.getElementById("quizContainer").appendChild(list);
 
     });
+} showQuiz();
+
+async function urls(){
+    let url = await request('/dashboard/urls', 'GET');
+    let urlData = JSON.parse(url);
+    console.log(urlData);
+let list = document.getElementById("404List");
+    urlData.forEach(url => {
+        let urlItem = document.createElement("li");
+        urlItem.innerHTML = `${url.url} - ${url.count}`;
+        list.appendChild(urlItem);
+    });
+    document.getElementById("urlContainer").innerHTML = "";
+    document.getElementById("urlContainer").appendChild(list);
+} urls();
+
+function getQuizStats(e){
+    e.preventDefault();
+    let quizSelect = document.getElementById("quizSelect");
+
+    // de value van de geselecteerde optie
+    let quizID = quizSelect.options[quizSelect.selectedIndex].value;
+    // de stats van de geselecteerde quiz
+    fetch(`/dashboard/stats/quizStats?${quizID}`, {
+    }).then((response) => {
+        response.json().then((data) => {
+            // de div selecteren waar de stats in moeten komen en leegmaken
+            const barChart = document.getElementById("barChart");
+            barChart.innerHTML = "";
+            let totaalCount = data.count;
+
+            // voor elke vraag een balk aanmaken
+            data.vragen.forEach((item) => {
+                let bar = document.createElement("div");
+                bar.classList.add("bar");
+                bar.style.height = `50px`;
+                // de breedte van de balk is het aantal keer dat de vraag is beantwoord in %
+                bar.style.width = `${(item.count / totaalCount) * 100}%`;
+                bar.innerHTML = `Ant ${item.antwoord} || ${item.count}`;
+                barChart.appendChild(bar);
+            });
+           
+        });
+    });
 }
-showQuiz();
+
+// vraagt alle vragen uit de quiz op
+function getQuizVragen(){
+    // omdat de eerste response een promise is, zijn er twee .then() nodig
+   fetch('/dashboard/stats/quizVragen').then((response) => {
+    // de response wordt omgezet naar een json object
+    response.json().then((data) => {
+        data.forEach(vraag => {
+            // de vragen worden toegevoegd aan de select
+            // de id van de vraag wordt meegegeven als value zodat deze later gebruikt kan worden
+            let select = document.getElementById("quizSelect");
+            let option = document.createElement("option");
+            option.innerHTML = vraag.quizVraag;
+            option.setAttribute("value", vraag.vraagID);
+            select.appendChild(option);
+            select.addEventListener("change", getQuizStats);
+        });
+    });
+   });
+} getQuizVragen();

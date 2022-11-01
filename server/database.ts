@@ -82,13 +82,6 @@ const database = {
         try {
         let conn;
           conn = await this.pool.getConnection();
-          console.log("inserting data");
-          console.log("table");
-          console.log(data.table);
-          console.log("rows");
-          console.log(data.rows);
-          console.log("values");
-          console.log(data.values);
           let waardes = [];
           
           data.values.forEach(element => {
@@ -98,7 +91,7 @@ const database = {
           const query = `"INSERT INTO ${data.table} (${data.rows}) VALUES (${waardes})"`;
           console.log(query);
           
-          const rows = await conn.query(`INSERT INTO ${data.table} (${data.rows}) VALUES (${waardes})`);
+          const rows = await conn.query(query);
 
           conn.end();
           return "rows";
@@ -113,7 +106,6 @@ const database = {
           try {
             let conn;
             conn = await this.pool.getConnection();
-            console.log("selecting data");
             let waardes = [];
             
             let query = `SELECT ${data.rows} FROM ${data.table}`;
@@ -144,7 +136,6 @@ const database = {
           try {
             let conn;
             conn = await this.pool.getConnection();
-            console.log("deleting data");
                         
             let query = `DELETE FROM ${data.table}`;
             if(data.where){
@@ -161,7 +152,75 @@ const database = {
             reject(err);
           }
         });
+      },
+
+      getURL: async function() {
+        try {
+        let conn;
+          conn = await this.pool.getConnection();
+
+          // select top 5 most common urls
+          const rows = await conn.query("SELECT url, COUNT(url) AS count FROM badPages GROUP BY url ORDER BY count DESC LIMIT 10");
+          conn.end();
+          return rows;
+        } catch (err) {
+          console.log("db error");
+          console.log(err);
+          throw err;
+        }
+      },
+
+      quizStats: async function(data) {
+        return new Promise(async (resolve, reject) => {        
+          try {
+            let conn;
+            conn = await this.pool.getConnection();
+          // de query voor het opvragen van de quiz stats
+            const vraagQ = `SELECT quizVraag FROM quiz WHERE ${data.where}`;
+            const countQ = `SELECT COUNT(*) as count FROM quizResultaten WHERE ${data.where} `;
+            const uniekQ = "SELECT DISTINCT(antwoord) FROM quizResultaten";
+
+            let stats = {
+              vraag: "",
+              count: 0,
+              vragen: [],
+            }
+
+            async function getVraagCount(antwoord){
+              return new Promise(async (resolve, reject) => {
+                const count = await conn.query(`SELECT count(antwoord) FROM quizResultaten WHERE antwoord = '${antwoord}' AND ${data.where}`);
+                
+                stats.vragen.push({
+                  antwoord: antwoord,
+                  count: count[0]["count(antwoord)"],
+                });
+                resolve("done");
+              });
+            }
+
+            const vraag = await conn.query(vraagQ);
+            stats.vraag = vraag[0].quizVraag;
+          
+            const uniek = await conn.query(uniekQ);
+            uniek.forEach(element => {
+              getVraagCount(element.antwoord);
+            });
+            
+
+            // selecteer count from all distinct quiz results
+            const count = await conn.query(countQ);                        
+            stats.count = count[0]["count"];            
+            conn.end();
+
+            resolve(stats);
+          } catch (err) {
+              console.log("db error");
+              console.log(err);
+              reject(err);
+          }
+        });
       }
+
 }
 
 module.exports = database;
