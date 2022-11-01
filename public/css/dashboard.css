@@ -7,3 +7,9 @@ input{
     overflow: scroll;
     margin-top: 10px;
 }
+
+.bar{
+    background-color: var(--green);
+    border: 2px;
+    border-style: solid;
+}

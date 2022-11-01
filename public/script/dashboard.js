@@ -186,21 +186,28 @@ function getQuizStats(e){
     e.preventDefault();
     let quizSelect = document.getElementById("quizSelect");
 
-    // log selected option
+    // de value van de geselecteerde optie
     let quizID = quizSelect.options[quizSelect.selectedIndex].value;
+    // de stats van de geselecteerde quiz
     fetch(`/dashboard/stats/quizStats?${quizID}`, {
     }).then((response) => {
         response.json().then((data) => {
-            console.log(data);
+            // de div selecteren waar de stats in moeten komen en leegmaken
+            const barChart = document.getElementById("barChart");
+            barChart.innerHTML = "";
+            let totaalCount = data.count;
 
-            let chart = new CanvasJS.Chart("barChart");
-            // het totaal aantal antwoorden opslaan
-            
-            // van iedere vraag het % van de antwoorden opslaan
-
-            // voor ieder antwoord een bar maken en de hoogte van de bar bepalen aan de hand van het % van de antwoorden
-
-
+            // voor elke vraag een balk aanmaken
+            data.vragen.forEach((item) => {
+                let bar = document.createElement("div");
+                bar.classList.add("bar");
+                bar.style.height = `50px`;
+                // de breedte van de balk is het aantal keer dat de vraag is beantwoord in %
+                bar.style.width = `${(item.count / totaalCount) * 100}%`;
+                bar.innerHTML = `Ant ${item.antwoord} || ${item.count}`;
+                barChart.appendChild(bar);
+            });
+           
         });
     });
 }
