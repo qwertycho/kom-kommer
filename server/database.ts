@@ -88,7 +88,7 @@ const database = {
             waardes.push(`'${DBescape.SQLescape(element)}'`);
           });
 
-          const query = `"INSERT INTO ${data.table} (${data.rows}) VALUES (${waardes})"`;
+          const query = `INSERT INTO ${data.table} (${data.rows}) VALUES (${waardes})`;
           console.log(query);
           
           const rows = await conn.query(query);
