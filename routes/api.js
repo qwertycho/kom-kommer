@@ -1,13 +1,10 @@
-const { resolveInclude } = require('ejs');
 const express = require('express');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser())
-const { json } = require('express/lib/response.js');
 
 // eigen troep
 const login = require('../server/login.js');
-const data = require('../public/data/data.json');
 const database = require('../server/database.js');
 const DBescape = require("../server/DBescape");
 
@@ -56,12 +53,9 @@ router.get('/quiz', (req, res) => {
 router.post('/quiz', (req, res) => {
     if(login.admin(req.cookies.auth)){
         try{
-            let waardes = [];
-            waardes.push(req.body.vraag);
-            waardes.push(req.body.antwoord1);
-            waardes.push(req.body.antwoord2);
-            waardes.push(req.body.antwoord3);
-            waardes.push(req.body.goedAntwoord);
+            
+            let waardes = [req.body.vraag, req.body.antwoord1, req.body.antwoord2, req.body.antwoord3, req.body.goedAntwoord];
+
             const query = {
                 table: "quiz",
                 rows: ["quizVraag", "antwoord1", "antwoord2", "antwoord3", "goedAntwoord"],

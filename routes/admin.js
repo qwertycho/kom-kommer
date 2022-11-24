@@ -1,15 +1,12 @@
-const { resolveInclude } = require('ejs');
 const express = require('express');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser())
-const { json } = require('express/lib/response.js');
 
 // eigen troep
 const login = require('../server/login.js');
 const cookie = require('../server/disclaimer.js');
 const database = require('../server/database.js');
-const { query } = require('express');
 
 router.post('/login', (req, res) => {
     if(login.admin(req.body.auth, req.body.username, req.body.password)){

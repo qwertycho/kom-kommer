@@ -1,9 +1,7 @@
 const port = 3300;
 const express = require('express');
-const router = express.Router()
 const app = express();
 var bodyParser = require('body-parser');
-const { json } = require('body-parser');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 require('dotenv').config()
@@ -65,7 +63,7 @@ app.get('/', (req, res) => {
 });
 
 // 404 handler
-app.use(function (req,res,next){
+app.use(function (req,res){
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     let query = {
         table: "badPages",

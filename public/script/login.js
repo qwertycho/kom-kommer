@@ -2,8 +2,6 @@ const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
 const button = document.getElementById('login');
 
-
-
 const login = async (event) => {
     event.preventDefault();
     const username = usernameInput.value;
