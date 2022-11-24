@@ -24,12 +24,9 @@
         <h1>Coole komkommer foto's</h1>
         <h3>Zó mooi heb je ze nog nooit gezien!</h3>
     </div>
-    <nav>
-        <button class="mobile-menu-button">Menu</button>
-        <ul class="nav-bar hidden">
-            <%- nav  %>
-        </ul>
-    </nav>
+    
+    <%- include("partials/nav") %>
+
     <main>
         <div class="main-container">
             <h4>De groei van een komkommerplant</h4>
@@ -70,9 +67,9 @@
     </main>
     <%- locals.disclaimer %>
 
-    <footer>
-        <%- footer  %>
-    </footer>
+
+    <%- include("partials/footer") %> 
+
 
 </body>
 

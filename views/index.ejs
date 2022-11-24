@@ -22,12 +22,8 @@
         <h1>Welkom op komkommer.eu!</h1>
         <h3>Dé website over komkommers</h3>
     </div>
-    <nav>
-        <button class="mobile-menu-button">Menu</button>
-        <ul class="nav-bar hidden">
-            <%- nav  %>
-        </ul>
-    </nav>
+
+            <%- include("partials/nav") %>
     <main>
         <div class="main-tekst">
             <h4>Welkom op komkommer.eu, dé website over komkommers!</h4>
@@ -49,9 +45,9 @@
     </main>
     <%- locals.disclaimer %>
 
-    <footer>
-        <%- footer  %>
-    </footer>
+
+    <%- include("partials/footer") %> 
+
 
 </body>
 

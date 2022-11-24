@@ -8,7 +8,7 @@ const { json } = require('express/lib/response.js');
 // eigen troep
 const login = require('../server/login.js');
 const data = require('../public/data/data.json');
-const database = require('../server/database.ts');
+const database = require('../server/database.js');
 const DBescape = require("../server/DBescape");
 
 

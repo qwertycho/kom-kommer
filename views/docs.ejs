@@ -23,12 +23,9 @@
         <h1>Epische komkommer api's</h1>
         <h3>Want wie wilt er geen komkommer api!</h3>
     </div>
-    <nav>
-        <button class="mobile-menu-button">Menu</button>
-        <ul class="nav-bar hidden">
-            <%- nav  %>
-        </ul>
-    </nav>
+    
+    <%- include("partials/nav") %>
+
     <main>
         <div class="main-tekst">
             <h4>Documentatie</h4>
@@ -55,9 +52,9 @@ Feitjes api:
 
     <%- locals.disclaimer %>
 
-    <footer>
-        <%- footer  %>
-    </footer>
+
+    <%- include("partials/footer") %> 
+
 
 </body>
 

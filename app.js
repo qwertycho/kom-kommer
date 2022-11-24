@@ -13,13 +13,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // eigen functies
-const navigatie = require('./server/nav.js');
 const cookie = require('./server/disclaimer.js');
-const database = require('./server/database.ts');
-
-// navigatie en footer data
-const data = require('./public/data/data.json');
-const nav = navigatie.navBuilder(data);
+const database = require('./server/database.js');
 
 app.use(express.static(__dirname +'/public'));
 
@@ -45,11 +40,11 @@ app.use('/api', apiRouter);
 app.get('/:id', (req, res) => {
     // check if filename exists
     if(req.params.id == "" || req.params.id == null || req.params.id == undefined || req.params.id == "/"){ 
-        res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});;
+        res.render(__dirname + '/views/index', {disclaimer: cookie.checkCookies(req.cookies)});;
     } 
     fs.stat(__dirname + '/views/' + req.params.id + ".ejs", function(err, stat) {
        if (err == null) {
-            res.render(__dirname + '/views/' + req.params.id, {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
+            res.render(__dirname + '/views/' + req.params.id, {disclaimer: cookie.checkCookies(req.cookies)});
         } else {
             console.log(err);
             const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -66,7 +61,7 @@ app.get('/:id', (req, res) => {
 
 // homepage
 app.get('/', (req, res) => {
-    res.render(__dirname + '/views/index', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
+    res.render(__dirname + '/views/index', {disclaimer: cookie.checkCookies(req.cookies)});
 });
 
 // 404 handler
@@ -83,5 +78,5 @@ app.use(function (req,res,next){
 
 // server luisterd naar de port
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running op http://localhost:${port}`);
 });

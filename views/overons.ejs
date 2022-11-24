@@ -24,12 +24,9 @@
         <h1>Over komkommer.eu</h1>
         <h3>Neem vooral geen contact op bij vragen</h3>
     </div>
-    <nav>
-        <button class="mobile-menu-button">Menu</button>
-        <ul class="nav-bar hidden">
-            <%- nav  %>
-        </ul>
-    </nav>
+    
+    <%- include("partials/nav") %>
+
     <main>
         <div class="main-tekst white-background">
             <h4>Wie zijn wij?</h4>
@@ -68,9 +65,9 @@
     </main>
     <%- locals.disclaimer %>
 
-    <footer>
-        <%- footer  %>
-    </footer>
+
+    <%- include("partials/footer") %> 
+
 
 </body>
 
