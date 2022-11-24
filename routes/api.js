@@ -1,16 +1,14 @@
-const { resolveInclude } = require('ejs');
 const express = require('express');
 const router = express.Router();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser())
-const { json } = require('express/lib/response.js');
 
 // eigen troep
 const login = require('../server/login.js');
-const data = require('../public/data/data.json');
 const database = require('../server/database.js');
 const DBescape = require("../server/DBescape");
-
+const api = require('../server/apiClass.js');
+const cache = require('../server/cache.js');
 
 router.get('/quiz', (req, res) => {
     try{
@@ -56,12 +54,9 @@ router.get('/quiz', (req, res) => {
 router.post('/quiz', (req, res) => {
     if(login.admin(req.cookies.auth)){
         try{
-            let waardes = [];
-            waardes.push(req.body.vraag);
-            waardes.push(req.body.antwoord1);
-            waardes.push(req.body.antwoord2);
-            waardes.push(req.body.antwoord3);
-            waardes.push(req.body.goedAntwoord);
+            
+            let waardes = [req.body.vraag, req.body.antwoord1, req.body.antwoord2, req.body.antwoord3, req.body.goedAntwoord];
+
             const query = {
                 table: "quiz",
                 rows: ["quizVraag", "antwoord1", "antwoord2", "antwoord3", "goedAntwoord"],
@@ -161,69 +156,23 @@ router.post('/checkQuiz', (req, res) => {
     }
 })
 
-router.get('/public/feitjes', (req, res) => {
+router.get('/feitjes', async (req, res) => {
     try{
-        let url = req.url;
-        let params = url.split("?");
-        if (params[1].includes("action")){
-            let action = params[1].split("=");
-            switch(action[1]){
-                case "nieuw":
-                    let nieuwQuery = {
-                        table: "feitjes",
-                        rows: "feit",
-                        order: "feit_id DESC",
-                        limit: 1
-                    };
-                    database.select(nieuwQuery).then((result) => {
-                        res.send(escape(result));
-                    })
-                    break;
-                case "random":
-                    let randQuery = {
-                        table: "feitjes",
-                        rows: "feit",
-                        order: "RAND()",
-                        limit: 1
-                    };
-                    database.select(randQuery).then((result) => {
-                        res.send(escape(result));
-                    })
-                    break;
-                    case "all":
-                    let allQuery = {
-                        table: "feitjes",
-                        rows: "feit",
-                    };
-                    database.select(allQuery).then((result) => {
-                        res.send(escape(result));
-                    })
-                    break;
-                    default:
-                    res.status(404).send("Geen geldige actie");
-
-                }
-
-        } else{
-            res.status(400).send("action parameter is niet meegegeven");
-        }
+        res.send(await cache.getFeitjes());
     } catch (err) {
         console.log(err);
         res.status(500).send();
     }
-
-    function escape(array){
-        try{
-            array.forEach(element => {
-                element.feit = DBescape.SQLunescape(element.feit);
-            });
-            return array;
-        } catch (err) {
-            console.log(err);
-        }
-    }
 })
 
-
+router.get('/public/feitjes', async (req, res) => {
+    try{
+        let feitjes = await api.getMethod(req)
+        res.send(feitjes);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
 
 module.exports = router;

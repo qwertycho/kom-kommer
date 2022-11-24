@@ -1,34 +1,5 @@
 {
     "type": "module",
-    "footer": {
-        "text": "© <a href='https://tychovopstal.nl'> Tycho van Opstal </a> 2022"
-    },
-    "nav": [
-        {
-            "name": "Home",
-            "link": "/"
-        },
-        {
-            "name": "Quiz",
-            "link": "quiz"
-        },
-        {
-            "name": "Epische Komkommer Feitjes",
-            "link": "feitjes"
-        },
-        {
-            "name": "Coole Komkommer Foto's",
-            "link": "foto"
-        },
-        {
-            "name": "De groei van een plant",
-            "link": "plant"
-        },
-        {
-            "name": "Over ons",
-            "link": "overons"
-        }
-    ],
     "fotos":
     [
         {

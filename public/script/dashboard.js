@@ -19,7 +19,7 @@ async function request(url, method, data){
 }
 
 async function showFeitjes(){
-    await request('/dashboard/feitjes', 'GET').then((feitjes) => {
+    await request('/api/feitjes', 'GET').then((feitjes) => {
         let feitjesData = JSON.parse(feitjes);
         let feitjesList = document.getElementById("feitjesList");
         feitjesList.innerHTML = ""; 

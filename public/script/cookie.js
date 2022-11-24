@@ -1,5 +1,3 @@
-console.log(document.cookie);
-
 function acceptCookie() {
     var cookie = document.getElementById("disclaimer");
     cookie.style.display = "none";

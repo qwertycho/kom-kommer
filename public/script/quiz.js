@@ -11,7 +11,6 @@ xhr.open('GET', '/api/quiz', true);
 xhr.onload = function () {
     if (this.status == 200) {
         let data = JSON.parse(this.responseText);
-        // quiz.push(data);
         quiz = data;
         setAntwoorden();
 
