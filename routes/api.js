@@ -7,7 +7,7 @@ router.use(cookieParser())
 const login = require('../server/login.js');
 const database = require('../server/database.js');
 const DBescape = require("../server/DBescape");
-
+const api = require('../server/apiClass.js');
 
 router.get('/quiz', (req, res) => {
     try{
@@ -155,66 +155,13 @@ router.post('/checkQuiz', (req, res) => {
     }
 })
 
-router.get('/public/feitjes', (req, res) => {
+router.get('/public/feitjes', async (req, res) => {
     try{
-        let url = req.url;
-        let params = url.split("?");
-        if (params[1].includes("action")){
-            let action = params[1].split("=");
-            switch(action[1]){
-                case "nieuw":
-                    let nieuwQuery = {
-                        table: "feitjes",
-                        rows: "feit",
-                        order: "feit_id DESC",
-                        limit: 1
-                    };
-                    database.select(nieuwQuery).then((result) => {
-                        res.send(escape(result));
-                    })
-                    break;
-                case "random":
-                    let randQuery = {
-                        table: "feitjes",
-                        rows: "feit",
-                        order: "RAND()",
-                        limit: 1
-                    };
-                    database.select(randQuery).then((result) => {
-                        res.send(escape(result));
-                    })
-                    break;
-                    case "all":
-                    let allQuery = {
-                        table: "feitjes",
-                        rows: "feit",
-                    };
-                    database.select(allQuery).then((result) => {
-                        res.send(escape(result));
-                    })
-                    break;
-                    default:
-                    res.status(404).send("Geen geldige actie");
-
-                }
-
-        } else{
-            res.status(400).send("action parameter is niet meegegeven");
-        }
+        let feitjes = await api.getMethod(req)
+        res.send(feitjes);
     } catch (err) {
         console.log(err);
         res.status(500).send();
-    }
-
-    function escape(array){
-        try{
-            array.forEach(element => {
-                element.feit = DBescape.SQLunescape(element.feit);
-            });
-            return array;
-        } catch (err) {
-            console.log(err);
-        }
     }
 })
 
