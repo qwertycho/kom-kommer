@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const cookie = require('../server/disclaimer.js');
-const data = require('../public/data/data.json');
-const navigatie = require('../server/nav.js');
-const nav = navigatie.navBuilder(data);
-const database = require('../server/database.ts');
-const { query } = require('express');
 
 router.get('/', (req, res) => {
-        res.render('../views/quiz', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
+        res.render('../views/quiz', {disclaimer: cookie.checkCookies(req.cookies)});
 });
 
 module.exports = router;

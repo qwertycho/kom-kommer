@@ -8,10 +8,7 @@ const { json } = require('express/lib/response.js');
 // eigen troep
 const login = require('../server/login.js');
 const cookie = require('../server/disclaimer.js');
-const data = require('../public/data/data.json');
-const navigatie = require('../server/nav.js');
-const nav = navigatie.navBuilder(data);
-const database = require('../server/database.ts');
+const database = require('../server/database.js');
 const { query } = require('express');
 
 router.post('/login', (req, res) => {
@@ -172,10 +169,10 @@ router.get("/stats/:id" , (req, res) => {
 
 router.get('/', (req, res) => {
     if(login.admin(req.cookies.auth)){
-        res.render('../views/dashboard', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
+        res.render('../views/dashboard', {disclaimer: cookie.checkCookies(req.cookies)});
     } else {
         console.log("dashboard: verkeerde auth");
-        res.render('../views/login', {footer:  data.footer.text, nav: nav, disclaimer: cookie.checkCookies(req.cookies)});
+        res.render('../views/login', {disclaimer: cookie.checkCookies(req.cookies)});
     }
 });
 
