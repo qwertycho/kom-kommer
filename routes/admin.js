@@ -7,6 +7,7 @@ router.use(cookieParser())
 const login = require('../server/login.js');
 const cookie = require('../server/disclaimer.js');
 const database = require('../server/database.js');
+const cache = require('../server/cache.js');
 
 router.post('/login', (req, res) => {
     if(login.admin(req.body.auth, req.body.username, req.body.password)){
@@ -18,11 +19,9 @@ router.post('/login', (req, res) => {
     }
 });
 
-router.get('/feitjes', (req, res) => {
+router.get('/feitjes', async (req, res) => {
     try{
-        database.loadFeitjes().then((result) => {
-            res.send(JSON.stringify(result));
-        });
+        res.send(await cache.getFeitjes());
     } catch (err) {
         console.log(err);
         res.status(500).send();
@@ -33,6 +32,7 @@ router.get('/feitjes', (req, res) => {
             database.addFeitje(req.body.feit).then(() => {
                 res.send(JSON.stringify(req.body.feit));
             });
+            cache.clearAll();
         } catch (err) {
             console.log(err);
             res.status(500).send();
@@ -49,6 +49,7 @@ router.delete('/feitjes', (req, res) => {
             database.deleteFeitje(req.body.id).then(() => {
                 res.send(JSON.stringify(req.body.id));
             });
+            cache.clearAll();
         }
         catch (err) {
             console.log(err);
@@ -66,6 +67,7 @@ router.put('/feitjes', (req, res) => {
             database.updateFeitje(req.body.id, req.body.feit).then(() => {
                 res.send(JSON.stringify(req.body.id));
             });
+            cache.clearAll();
         }
         catch (err) {
             console.log(err);

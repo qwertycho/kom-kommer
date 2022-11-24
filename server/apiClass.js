@@ -1,4 +1,5 @@
 const database = require('./database');
+const cache = require('./cache.js');
 
 const api = {
     getMethod: async (req) => {
@@ -30,10 +31,7 @@ const api = {
                 }
                 break;
                 case "all":
-                query = {
-                    table: "feitjes",
-                    rows: "feit",
-                }
+                    return await cache.getFeitjes()
                 break;
             default:
                 res.status(404).send("Geen geldige actie");

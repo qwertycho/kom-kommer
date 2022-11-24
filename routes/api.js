@@ -8,6 +8,7 @@ const login = require('../server/login.js');
 const database = require('../server/database.js');
 const DBescape = require("../server/DBescape");
 const api = require('../server/apiClass.js');
+const cache = require('../server/cache.js');
 
 router.get('/quiz', (req, res) => {
     try{
@@ -164,7 +165,5 @@ router.get('/public/feitjes', async (req, res) => {
         res.status(500).send();
     }
 })
-
-
 
 module.exports = router;

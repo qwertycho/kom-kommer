@@ -28,7 +28,7 @@ const database = {
 
   addFeitje: async function(feitje) {
 
-    await this.checkConnecite();
+    await this.checkConnectie();
 
     try {
       feitje = DBescape.SQLescape(feitje);
@@ -43,7 +43,7 @@ const database = {
 
   updateFeitje: async function(ID,feitje) {
 
-    await this.checkConnecite();	
+    await this.checkConnectie();	
 
     try {
       feitje = DBescape.SQLescape(feitje);
@@ -59,7 +59,7 @@ const database = {
 
   deleteFeitje: async function(ID) {
     
-    await this.checkConnecite();
+    await this.checkConnectie();
 
     try {
     const row = await conn.query("DELETE FROM feitjes WHERE feit_ID=(?)", [ID]);
