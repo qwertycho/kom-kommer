@@ -19,15 +19,17 @@ router.post('/login', (req, res) => {
     }
 });
 
-router.get('/feitjes', async (req, res) => {
-    try{
-        res.send(await cache.getFeitjes());
-    } catch (err) {
-        console.log(err);
-        res.status(500).send();
-    }
-}).post('/feitjes', (req, res) => {
+router.all('*', (req, res, next) => {
     if(login.admin(req.cookies.auth)){
+        console.log("admin");
+        next();
+    } else {
+        console.log("geen admin");
+        res.status(401).render("../views/login.ejs");
+    }
+});
+
+router.post('/feitjes', (req, res) => {
         try{
             database.addFeitje(req.body.feit).then(() => {
                 res.send(JSON.stringify(req.body.feit));
@@ -37,13 +39,9 @@ router.get('/feitjes', async (req, res) => {
             console.log(err);
             res.status(500).send();
         }
-    } else {
-        console.log("post request feitjes: verkeerde auth");
-        res.status(401).send();
-    }
 })
+
 router.delete('/feitjes', (req, res) => {
-    if(login.admin(req.cookies.auth)){
         console.log("request for  put in feitjes");
         try{
             database.deleteFeitje(req.body.id).then(() => {
@@ -55,37 +53,53 @@ router.delete('/feitjes', (req, res) => {
             console.log(err);
             res.status(500).send();
         }
-    } else {
-        console.log("delete request feitjes: verkeerde auth");
-        res.status(401).send();
-    }
 })
 
 router.put('/feitjes', (req, res) => {
-        if(login.admin(req.cookies.auth)){
-        try{
-            database.updateFeitje(req.body.id, req.body.feit).then(() => {
-                res.send(JSON.stringify(req.body.id));
-            });
-            cache.clearAll();
-        }
-        catch (err) {
-            console.log(err);
-            res.status(500).send();
-        }
-    } else {
-        console.log("put request feitjes: verkeerde auth");
-        res.status(401).send();
+    try{
+        database.updateFeitje(req.body.id, req.body.feit).then(() => {
+            res.send(JSON.stringify(req.body.id));
+        });
+        cache.clearAll();
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send();
     }
 });
 
 // route voor het opvragen van de statistieken over de 404 errors
 router.get('/urls', (req, res) => {
-    if(login.admin(req.cookies.auth)){
-        try{
-            // de DB returnt een array met daarin de de objecten met url en count
-            // helaas is de count een bigint en die kan niet naar JSON
-            // dus eerst omzetten naar een normale int
+    try{
+        // de DB returnt een array met daarin de de objecten met url en count
+        // helaas is de count een bigint en die kan niet naar JSON
+        // dus eerst omzetten naar een normale int
+        database.getURL().then((result) => {
+            let arr = [];
+            result.forEach(element => {
+                let obj = {
+                    url: element.url,
+                    count: Number(element.count),
+                }
+                arr.push(obj);
+            });
+            res.send(arr);
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+});
+
+router.get("/stats/:id" , (req, res) => {
+    try{
+        const aanvraag = req.params.id;
+        let query = {}
+        switch(aanvraag){
+            case "url":
+        // de DB returnt een array met daarin de de objecten met url en count
+        // helaas is de count een bigint en die kan niet naar JSON
+        // dus eerst omzetten naar een normale int
             database.getURL().then((result) => {
                 let arr = [];
                 result.forEach(element => {
@@ -97,82 +111,41 @@ router.get('/urls', (req, res) => {
                 });
                 res.send(arr);
             });
-        } catch (err) {
-            console.log(err);
-            res.status(500).send();
-        }
-    } else {
-        res.status(401).send("geen toegang");
-    }
-});
-
-router.get("/stats/:id" , (req, res) => {
-    if(login.admin(req.cookies.auth)){
-        try{
-            const aanvraag = req.params.id;
-            
-            let query = {}
-            switch(aanvraag){
-                case "url":
-            // de DB returnt een array met daarin de de objecten met url en count
-            // helaas is de count een bigint en die kan niet naar JSON
-            // dus eerst omzetten naar een normale int
-                    database.getURL().then((result) => {
-                        let arr = [];
-                        result.forEach(element => {
-                            let obj = {
-                                url: element.url,
-                                count: Number(element.count),
-                            }
-                            arr.push(obj);
-                        });
-                        res.send(arr);
-                    });
-                break;
-                case "quizVragen":
-                    query = {
-                        table: "quiz",
-                        rows: ["vraagID, quizVraag"],
-
-                    }
-                    database.select(query).then((result) => {
-                        res.send(result);
-                    });
-                break;
-                case "quizStats":
-                    let vraagID = req.url.split("?")[1];
-                    query = {
-                        table: "quizResultaten",
-                        rows: ["antwoord"],
-                        where: "vraagID = " + vraagID,
-                    }
-                    database.quizStats(query).then((result) => {
-                        console.log(result);
-                        result.vragen.forEach(element => {
-                            element.count = Number(element.count);
-                        });
-                        result.count = Number(result.count);
-                        res.send(result);
-                    });
-                break;
+        break;
+        case "quizVragen":
+            query = {
+                table: "quiz",
+                rows: ["vraagID, quizVraag"],
             }
-        } catch (err) {
-            console.log(err);
-            res.status(500).send();
+            database.select(query).then((result) => {
+                res.send(result);
+            });
+        break;
+        case "quizStats":
+            let vraagID = req.url.split("?")[1];
+            query = {
+                table: "quizResultaten",
+                rows: ["antwoord"],
+                where: "vraagID = " + vraagID,
+            }
+            database.quizStats(query).then((result) => {
+                console.log(result);
+                result.vragen.forEach(element => {
+                    element.count = Number(element.count);
+                });
+                result.count = Number(result.count);
+                res.send(result);
+            });
+        break;
         }
-    } else {
-        res.status(401).send("geen toegang");
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
     }
-
 });
 
 router.get('/', (req, res) => {
-    if(login.admin(req.cookies.auth)){
         res.render('../views/dashboard', {disclaimer: cookie.checkCookies(req.cookies)});
-    } else {
-        console.log("dashboard: verkeerde auth");
-        res.render('../views/login', {disclaimer: cookie.checkCookies(req.cookies)});
-    }
 });
 
 module.exports = router;

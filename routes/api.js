@@ -156,6 +156,15 @@ router.post('/checkQuiz', (req, res) => {
     }
 })
 
+router.get('/feitjes', async (req, res) => {
+    try{
+        res.send(await cache.getFeitjes());
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+})
+
 router.get('/public/feitjes', async (req, res) => {
     try{
         let feitjes = await api.getMethod(req)
