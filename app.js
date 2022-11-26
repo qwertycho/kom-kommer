@@ -65,12 +65,7 @@ app.get('/', (req, res) => {
 // 404 handler
 app.use(function (req,res){
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    let query = {
-        table: "badPages",
-        rows: ["url", "ip"],
-        values: [req.url, ip]
-    }
-    database.insert(query);
+    database.badPages(url, ip);
 	res.status(404).send('Verkeerde pagina jij bergkip');
 });
 
