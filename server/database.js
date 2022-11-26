@@ -219,18 +219,8 @@ const database = {
   },
 
   badPages: async function(url, ip) {
-      
       await this.checkConnectie();
-  
       try {
-        // de query voor het opvragen van de quiz stats
-        // let url = DBescape.SQLescape(url);
-        // let ip = DBescape.SQLescape(ip);
-
-        // prevent sql injection with prepared statements
-        console.log(`INSERT INTO badPages (url, ip) VALUES ('${url}', '${ip}')`);
-        console.log(ip);
-        console.log(url);
         let query = "INSERT INTO badPages (url, ip) VALUES (?,?)";
         const rows = await conn.query(query, [url, ip]);
   
