@@ -224,6 +224,8 @@ const database = {
   
       try {
         // de query voor het opvragen van de quiz stats
+        let url = DBescape.SQLescape(url);
+        let ip = DBescape.SQLescape(ip);
         const query = `INSERT INTO badPages (url, ip) VALUES ('${url}', '${ip}')`;
         const rows = await conn.query(query);
       } catch (err) {
