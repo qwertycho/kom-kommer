@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
 
 // 404 handler
 app.use(function (req,res){
-    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress[0];
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     database.badPages(url, ip);
 	res.status(404).send('Verkeerde pagina jij bergkip');
 });
