@@ -78,13 +78,10 @@ const DBescape = {
       },
       
       HTMLescape: function(string){
-        string = string.replace(/&/g, "&amp;");
-        string = string.replace(/</g, "&lt;");
-        string = string.replace(/>/g, "&gt;");
-        string = string.replace(/"/g, "&quot;");
-        string = string.replace(/'/g, "&#039;");
-        string = string.replace(/\\s/g, "   ");
-        return string;
+            return string.replace(
+                /[^0-9A-Za-z ]/g,
+                c => "&#" + c.charCodeAt(0) + ";"
+            );
       }
 }
 
