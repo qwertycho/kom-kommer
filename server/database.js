@@ -228,7 +228,9 @@ const database = {
         // let ip = DBescape.SQLescape(ip);
 
         // prevent sql injection with prepared statements
-        const rows = await conn.query("INSERT INTO badPages (url, ip) VALUES (?, ?)", [url, ip]);
+        let query = "INSERT INTO badPages (url, ip) VALUES (?,?)";
+        const rows = await conn.query(query, [url, ip]);
+  
       } catch (err) {
         console.log(`DB badpages error ${err}`);
       }
