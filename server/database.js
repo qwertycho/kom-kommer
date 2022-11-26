@@ -31,7 +31,6 @@ const database = {
     await this.checkConnectie();
 
     try {
-      feitje = DBescape.SQLescape(feitje);
       const row = await conn.query("INSERT INTO feitjes (feit) VALUES (?)", [feitje]);
 
     } catch (err) {
@@ -46,7 +45,6 @@ const database = {
     await this.checkConnectie();	
 
     try {
-      feitje = DBescape.SQLescape(feitje);
       const row = await conn.query("UPDATE feitjes SET feit = (?) WHERE feit_ID=(?)", [feitje, ID]);
     } catch (err) {
       // als er een error is, log deze dan
@@ -79,11 +77,6 @@ const database = {
 
       const rows = await conn.query("SELECT * FROM feitjes");
       conn.end();
-      rows.forEach(element => {
-        let string = element.feit;
-        string = DBescape.SQLunescape(string);
-        element.feit = DBescape.HTMLescape(string);
-      });
       return rows;
     } catch (err) {
         console.log(`DB loadfeitjes error ${err}`);
