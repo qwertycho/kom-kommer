@@ -45,13 +45,8 @@ app.get('/:id', (req, res) => {
             res.render(__dirname + '/views/' + req.params.id, {disclaimer: cookie.checkCookies(req.cookies)});
         } else {
             console.log(err);
-            const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-            let query = {
-                table: "badPages",
-                rows: ["url", "ip"],
-                values: [req.url, ip]
-            }
-            database.insert(query);
+               const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+            database.badPages(req.url, ip);
             res.status(404).sendFile(__dirname + '/views/404.html');
         }
     });
@@ -65,8 +60,8 @@ app.get('/', (req, res) => {
 // 404 handler
 app.use(function (req,res){
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    database.badPages(url, ip);
-	res.status(404).send('Verkeerde pagina jij bergkip');
+    database.badPages(req.url, ip);
+    res.status(404).sendFile(__dirname + '/views/404.html');
 });
 
 // server luisterd naar de port

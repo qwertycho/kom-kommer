@@ -219,13 +219,11 @@ const database = {
   },
 
   badPages: async function(url, ip) {
-      
       await this.checkConnectie();
-  
       try {
-        // de query voor het opvragen van de quiz stats
-        const query = `INSERT INTO badPages (url, ip) VALUES ('${url}', '${ip}')`;
-        const rows = await conn.query(query);
+        let query = "INSERT INTO badPages (url, ip) VALUES (?,?)";
+        const rows = await conn.query(query, [url, ip]);
+  
       } catch (err) {
         console.log(`DB badpages error ${err}`);
       }
