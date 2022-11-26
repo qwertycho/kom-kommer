@@ -16,7 +16,9 @@ class Cache {
             return feitjeCache.get("feitjes");
         } else {
 
-               const feitje = database.loadFeitjes();
+               let feitje = database.loadFeitjes();
+                
+            
 
                 feitjeCache.set("feitjes", feitje);
                 console.log("feitjes uit database");
