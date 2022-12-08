@@ -31,7 +31,7 @@ body{
 
 nav{
     width: 100%;
-    padding: 20px 0 20px 0;
+    padding: 20px 0;
     font-size: 1.2rem;
     background-color: var(--white);
 }
@@ -43,7 +43,7 @@ nav .mobile-menu-button{
 nav ul{
     list-style: none;
     display: flex;
-    margin: 0 auto 0 auto;
+    margin: 0 auto;
     padding: 0;
     width: 90%;
 }
@@ -92,7 +92,7 @@ img{
 
 footer{
     background-color: var(--white);
-    padding: 5px 0 5px 0;
+    padding: 5px 0;
     text-align: center;
     font-size: 1rem;
     width: 100%;
@@ -156,7 +156,7 @@ footer a{
 
     nav li{
         flex: 100%;
-        margin: 5px 0 5px 0;
+        margin: 5px 0;
     }
 
     main{
@@ -178,7 +178,7 @@ footer a{
         background-color: var(--geel);
         max-height: 50vh;
         width: auto;
-        margin: 20px auto auto auto;
+        margin: 20px auto auto;
     }
 
     footer{
