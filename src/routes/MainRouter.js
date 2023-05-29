@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.MainRouter = void 0;
 var express = require("express");
 var router = express.Router();
@@ -17,11 +17,11 @@ var MainRouter = /** @class */ (function () {
 exports.MainRouter = MainRouter;
 router.get("/", function (req, res) {
     res.render("homepage", {
-        title: "Hello World!"
+        title: "Hello World!",
     });
 });
 router.get("/about", function (req, res) {
     res.render("homepage", {
-        title: "About"
+        title: "About",
     });
 });
